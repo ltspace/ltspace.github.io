@@ -19,24 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"www.lter.space","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Notes on technology, reading, films, and passing thoughts.">
-<meta property="og:type" content="website">
+    <meta name="description" content="关键路径是否明确 ：请求链路里最慢的 1–3 个步骤分别是什么（DB&#x2F;网络&#x2F;模型&#x2F;磁盘）？有指标或日志能证明吗？ 超时与重试是否完整 ：所有外部依赖（DB&#x2F;HTTP&#x2F;OSS&#x2F;消息队列）是否设置了超时、重试策略与退避（并有上限）？ 资源池是否正确配置 ：数据库连接池 &#x2F; HTTP 连接池 &#x2F; 线程池是否启用？池大小、队列长度、回收策略是否与并发量匹配？...">
+<meta property="og:type" content="article">
 <meta property="og:title" content="LTSpace">
-<meta property="og:url" content="https://www.lter.space/archives/index.html">
+<meta property="og:url" content="https://www.lter.space/2026/03/09/FASTAPI%E5%B7%A5%E7%A8%8B%E8%87%AA%E6%A3%80/index.html">
 <meta property="og:site_name" content="LTSpace">
-<meta property="og:description" content="Notes on technology, reading, films, and passing thoughts.">
+<meta property="og:description" content="关键路径是否明确 ：请求链路里最慢的 1–3 个步骤分别是什么（DB&#x2F;网络&#x2F;模型&#x2F;磁盘）？有指标或日志能证明吗？ 超时与重试是否完整 ：所有外部依赖（DB&#x2F;HTTP&#x2F;OSS&#x2F;消息队列）是否设置了超时、重试策略与退避（并有上限）？ 资源池是否正确配置 ：数据库连接池 &#x2F; HTTP 连接池 &#x2F; 线程池是否启用？池大小、队列长度、回收策略是否与并发量匹配？...">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-09T09:57:09.606Z">
+<meta property="article:modified_time" content="2025-12-23T16:49:57.450Z">
 <meta property="article:author" content="LT">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://www.lter.space/archives/">
+<link rel="canonical" href="https://www.lter.space/2026/03/09/FASTAPI%E5%B7%A5%E7%A8%8B%E8%87%AA%E6%A3%80/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.lter.space/2026/03/09/FASTAPI%E5%B7%A5%E7%A8%8B%E8%87%AA%E6%A3%80/","path":"2026/03/09/FASTAPI工程自检/","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | LTSpace</title>
+<title> | LTSpace</title>
   
 
 
@@ -88,7 +90,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">LTSpace</h1>
+      <p class="site-title">LTSpace</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">And now I see with eye serene , The very pulse of the machine.</p>
@@ -211,238 +213,116 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 12 篇日志。 继续努力。</span>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2026<span class="collection-year-count">3</span></span>
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.lter.space/2026/03/09/FASTAPI%E5%B7%A5%E7%A8%8B%E8%87%AA%E6%A3%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/20260205-175910.jpg">
+      <meta itemprop="name" content="LT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LTSpace">
+      <meta itemprop="description" content="Notes on technology, reading, films, and passing thoughts.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | LTSpace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-03-09 17:57:09" itemprop="dateCreated datePublished" datetime="2026-03-09T17:57:09+08:00">2026-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-12-24 00:49:57" itemprop="dateModified" datetime="2025-12-24T00:49:57+08:00">2025-12-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><ol>
+<li><strong>关键路径是否明确</strong>：请求链路里最慢的 1–3 个步骤分别是什么（DB/网络/模型/磁盘）？有指标或日志能证明吗？</li>
+<li><strong>超时与重试是否完整</strong>：所有外部依赖（DB/HTTP/OSS/消息队列）是否设置了超时、重试策略与退避（并有上限）？</li>
+<li><strong>资源池是否正确配置</strong>：数据库连接池 / HTTP 连接池 / 线程池是否启用？池大小、队列长度、回收策略是否与并发量匹配？</li>
+<li><strong>数据库连接方式是否一致</strong>：是否统一通过配置（DSN/环境变量）管理连接参数？是否区分读写、是否有连接健康检查与断线重连策略？</li>
+<li><strong>负载类型是否判断正确</strong>：当前服务主要是 IO 密集还是 CPU 密集？对应采用 async / 线程池 / 多进程 / 任务队列的组合是否合理？</li>
+<li><strong>并发模型是否清晰</strong>：进程数、线程数、协程数、worker 数分别是多少？谁负责 CPU、谁负责 IO？是否存在“重复并发”（多层叠加导致过载）？</li>
+<li><strong>队列/Worker Pool 是否可控</strong>：是否有最大并发、最大排队、任务超时、任务取消/幂等、失败重试与死信/告警机制？</li>
+<li><strong>数据库查询是否可规模化</strong>：是否存在 N+1、无索引全表扫、分页深翻、排序无索引等问题？关键 SQL 是否可 explain 并持续监控？</li>
+<li><strong>写入一致性与幂等</strong>：创建/更新接口是否有幂等键或唯一约束？重复请求是否会写出脏数据/重复数据？</li>
+<li><strong>文件/对象存储写入是否安全</strong>：OSS 路径是否全局唯一（避免同名覆盖）？是否采用“临时对象 + 原子重命名/版本化”或“内容哈希命名”？</li>
+<li><strong>数据校验与安全边界</strong>：入参是否做了 schema 校验、大小限制、类型限制？上传是否限制格式/体积/数量并防止 zip bomb 等风险？</li>
+<li><strong>密码与密钥是否合规</strong>：密码是否使用强哈希（bcrypt/argon2），并有合适 cost；密钥是否只从安全配置读取且不落日志？</li>
+<li><strong>时间处理是否一致</strong>：时间统一用 UTC 还是 epoch；是否避免使用已弃用/易混淆的 API（如某些 <code>utcnow</code> 用法）并确保时区语义明确？</li>
+<li><strong>API 生命周期是否健康</strong>：是否避免使用已弃用的框架钩子/接口（例如 FastAPI 的老式事件钩子），并跟随框架推荐方式实现启动/关闭？</li>
+<li><strong>错误处理是否可运营</strong>：异常是否分级（4xx/5xx）、是否有可追踪的错误码、是否避免吞错；关键失败是否告警？</li>
+<li><strong>日志/追踪/指标是否闭环</strong>：是否有 request_id/trace_id；是否有 QPS、延迟分位数、错误率、DB/队列/worker 指标；能否快速定位瓶颈？</li>
+<li><strong>限流与熔断是否存在</strong>：对高成本路径（模型推理/大文件/外部依赖）是否有并发阈值、排队策略、熔断降级与保护开关？</li>
+<li><strong>部署与回滚是否可靠</strong>：配置是否可回滚；迁移是否可逆/可灰度；是否有健康检查、优雅停机与连接耗尽策略？</li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-03-09T17:57:09+08:00"
-              content="2026-03-09">
-          03-09
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/03/09/FASTAPI%E6%96%B0%E9%A1%B9%E7%9B%AE%E6%8C%87%E5%8C%97/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
+    <footer class="post-footer">
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/09/HACore-WSL%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/03/09/FASTAPI%E6%96%B0%E9%A1%B9%E7%9B%AE%E6%8C%87%E5%8C%97/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-03-09T17:57:09+08:00"
-              content="2026-03-09">
-          03-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/03/09/FASTAPI%E5%B7%A5%E7%A8%8B%E8%87%AA%E6%A3%80/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-03-09T17:56:46+08:00"
-              content="2026-03-09">
-          03-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/03/09/HACore-WSL%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" itemprop="url">
-            <span itemprop="name">未命名</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2024<span class="collection-year-count">6</span></span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-19T22:57:12+08:00"
-              content="2024-03-19">
-          03-19
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/03/19/canglangzhishui2/" itemprop="url">
-            <span itemprop="name">《沧浪之水》实体书阅读笔记</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-19T22:48:47+08:00"
-              content="2024-03-19">
-          03-19
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/03/19/canglangzhishui/" itemprop="url">
-            <span itemprop="name">《沧浪之水》微信读书阅读笔记</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-18T19:21:15+08:00"
-              content="2024-03-18">
-          03-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/03/18/show/" itemprop="url">
-            <span itemprop="name">毕设PCB实物展示</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-12T15:38:27+08:00"
-              content="2024-03-12">
-          03-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/03/12/PCB/" itemprop="url">
-            <span itemprop="name">毕设PCB原理图展示</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-03-09T16:20:59+08:00"
-              content="2024-03-09">
-          03-09
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/03/09/try/" itemprop="url">
-            <span itemprop="name">配置博客自动改图片路径和自动剪切图片的尝试</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-02-29T10:29:10+08:00"
-              content="2024-02-29">
-          02-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/02/29/%E9%87%8D%E6%96%B0%E6%90%9E%E4%BA%86%E5%8D%9A%E5%AE%A2/" itemprop="url">
-            <span itemprop="name">重新搞了博客</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2023<span class="collection-year-count">3</span></span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2023-08-24T23:05:36+08:00"
-              content="2023-08-24">
-          08-24
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/08/24/%E7%99%BD%E5%AB%96Google%E7%9B%B8%E5%86%8C%E6%97%A0%E9%99%90%E7%A9%BA%E9%97%B4%E5%AE%9E%E6%93%8D/" itemprop="url">
-            <span itemprop="name">白嫖Google相册无限空间实操</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+
+
+
 
 </div>
   </main>
