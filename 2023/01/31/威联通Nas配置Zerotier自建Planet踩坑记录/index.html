@@ -21,22 +21,22 @@
     <meta name="description" content="威联通Nas配置Zerotier自建Planet踩坑记录   0.用到的东西： 威联通*1，型号：TS-264C 腾讯云服务器*1 Mi10pro*1 Win11*1  1.自建Planet  1.1倒腾一键脚本半天，没成功 主要是看的这个教程： 构建Zerotier私有根服务器(Planet)，实现比MOON更稳定的内网穿透 - 知乎 (zhihu.com)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="威联通Nas配置Zerotier自建Planet踩坑记录">
-<meta property="og:url" content="http://example.com/2023/01/31/%E5%A8%81%E8%81%94%E9%80%9ANas%E9%85%8D%E7%BD%AEZerotier%E8%87%AA%E5%BB%BAPlanet%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:url" content="https://www.lter.space/2023/01/31/%E5%A8%81%E8%81%94%E9%80%9ANas%E9%85%8D%E7%BD%AEZerotier%E8%87%AA%E5%BB%BAPlanet%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="LTSpace">
 <meta property="og:description" content="威联通Nas配置Zerotier自建Planet踩坑记录   0.用到的东西： 威联通*1，型号：TS-264C 腾讯云服务器*1 Mi10pro*1 Win11*1  1.自建Planet  1.1倒腾一键脚本半天，没成功 主要是看的这个教程： 构建Zerotier私有根服务器(Planet)，实现比MOON更稳定的内网穿透 - 知乎 (zhihu.com)">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/image-20240310224426282.png">
-<meta property="og:image" content="http://example.com/images/image-20240310224443196.png">
-<meta property="og:image" content="http://example.com/images/image-20240310224459360.png">
-<meta property="og:image" content="http://example.com/images/image-20240310224518496.png">
-<meta property="og:image" content="http://example.com/images/image-20240310225006482.png">
-<meta property="og:image" content="http://example.com/images/image-20240310225018232.png">
-<meta property="og:image" content="http://example.com/images/image-20240310225029560.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310224426282.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310224443196.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310224459360.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310224518496.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310225006482.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310225018232.png">
+<meta property="og:image" content="https://www.lter.space/images/image-20240310225029560.png">
 <meta property="article:published_time" content="2023-01-31T10:41:42.000Z">
-<meta property="article:modified_time" content="2024-03-23T12:56:08.304Z">
+<meta property="article:modified_time" content="2026-03-09T06:52:13.839Z">
 <meta property="article:author" content="LT">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/image-20240310224426282.png">
+<meta name="twitter:image" content="https://www.lter.space/images/image-20240310224426282.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -80,7 +80,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"www.lter.space","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -460,7 +460,7 @@ ZeroTier Planet 根服务器（Docker 版） | shiruixuan (gitee.io)</a></p>
   <div class="license-box my-3">
     <div class="license-title">
       <div>威联通Nas配置Zerotier自建Planet踩坑记录</div>
-      <div>http://example.com/2023/01/31/威联通Nas配置Zerotier自建Planet踩坑记录/</div>
+      <div>https://www.lter.space/2023/01/31/威联通Nas配置Zerotier自建Planet踩坑记录/</div>
     </div>
     <div class="license-meta">
       
@@ -478,7 +478,7 @@ ZeroTier Planet 根服务器（Docker 版） | shiruixuan (gitee.io)</a></p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年3月23日</div>
+          <div>2026年3月9日</div>
         </div>
       
       
