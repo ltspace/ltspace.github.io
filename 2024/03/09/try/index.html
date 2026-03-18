@@ -161,7 +161,12 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#regex-r%E2%80%99-%E2%80%99"><span class="nav-number">1.</span> <span class="nav-text">regex &#x3D; r’![.?]((.?))’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%8F%E6%AC%A1%E4%B8%8A%E4%BC%A0%E5%8D%9A%E5%AE%A2md%E6%96%87%E4%BB%B6%E5%92%8C%E5%9B%BE%E5%83%8F%E9%9C%80%E8%A6%81g%E8%BF%98%E6%98%AFd"><span class="nav-number">2.</span> <span class="nav-text">每次上传博客md文件和图像需要g还是d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-cannot-spawn-git-hooks-pre-commit-No-such-file-or-directory-Everything-up-to-date-branch-%E2%80%98master%E2%80%99-set-up-to-track-%E2%80%98git-github-com-ltspace-ltspace-github-io-git-master%E2%80%99"><span class="nav-number">3.</span> <span class="nav-text">error: cannot spawn .git&#x2F;hooks&#x2F;pre-commit: No such file or directory Everything up-to-date branch ‘master’ set up to track ‘git@github.com:ltspace&#x2F;ltspace.github.io.git&#x2F;master’.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git%E4%BB%93%E5%BA%93%E9%87%8C-git%E7%9A%84%E5%90%8D%E5%AD%97%E6%98%AF-deploy-git"><span class="nav-number">4.</span> <span class="nav-text">git仓库里.git的名字是.deploy_git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#depoly-git%E9%87%8C%E8%BF%98%E6%9C%89%E4%B8%80%E4%B8%AA-git%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">.depoly_git里还有一个.git文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96%E5%86%8D%E6%89%A7%E8%A1%8C%E4%B8%80%E9%81%8Dgit-commit%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%8F%AA%E6%89%A7%E8%A1%8Chexo-g-d"><span class="nav-number">6.</span> <span class="nav-text">额外再执行一遍git commit的命令，只执行hexo g -d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E9%92%A9%E5%AD%90%E6%94%BE%E5%88%B0-deploy-git%E7%9A%84-git%E9%87%8C%EF%BC%8Chexo-g-d-%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8C%E9%92%A9%E5%AD%90"><span class="nav-number">7.</span> <span class="nav-text">把钩子放到.deploy_git的.git里，hexo g -d 直接执行钩子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%B0%86%E5%9B%BE%E7%89%87%E7%A7%BB%E5%8A%A8%E5%92%8C%E6%9B%BF%E6%8D%A2%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E4%B8%BA%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E5%8A%9F%E8%83%BD%E5%90%88%E5%B9%B6%E5%88%B0%E4%B8%80%E4%B8%AA%E8%84%9A%E6%9C%AC%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">8.</span> <span class="nav-text">以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#regex-r.."><span class="nav-number">1.</span> <span class="nav-text">regex &#x3D; r&#39;![.?]((.?))&#39;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%8F%E6%AC%A1%E4%B8%8A%E4%BC%A0%E5%8D%9A%E5%AE%A2md%E6%96%87%E4%BB%B6%E5%92%8C%E5%9B%BE%E5%83%8F%E9%9C%80%E8%A6%81g%E8%BF%98%E6%98%AFd"><span class="nav-number">2.</span> <span class="nav-text">每次上传博客md文件和图像需要g还是d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-cannot-spawn-.githookspre-commit-no-such-file-or-directory-everything-up-to-date-branch-master-set-up-to-track-gitgithub.comltspaceltspace.github.io.gitmaster."><span class="nav-number">3.</span> <span class="nav-text">error:
+cannot spawn .git&#x2F;hooks&#x2F;pre-commit: No such file or directory Everything
+up-to-date branch &#39;master&#39; set up to track
+&#39;git@github.com:ltspace&#x2F;ltspace.github.io.git&#x2F;master&#39;.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git%E4%BB%93%E5%BA%93%E9%87%8C.git%E7%9A%84%E5%90%8D%E5%AD%97%E6%98%AF.deploy_git"><span class="nav-number">4.</span> <span class="nav-text">git仓库里.git的名字是.deploy_git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#depoly_git%E9%87%8C%E8%BF%98%E6%9C%89%E4%B8%80%E4%B8%AA.git%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">.depoly_git里还有一个.git文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9D%E5%A4%96%E5%86%8D%E6%89%A7%E8%A1%8C%E4%B8%80%E9%81%8Dgit-commit%E7%9A%84%E5%91%BD%E4%BB%A4%E5%8F%AA%E6%89%A7%E8%A1%8Chexo-g--d"><span class="nav-number">6.</span> <span class="nav-text">额外再执行一遍git
+commit的命令，只执行hexo g -d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E9%92%A9%E5%AD%90%E6%94%BE%E5%88%B0.deploy_git%E7%9A%84.git%E9%87%8Chexo-g--d-%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8C%E9%92%A9%E5%AD%90"><span class="nav-number">7.</span> <span class="nav-text">把钩子放到.deploy_git的.git里，hexo
+g -d 直接执行钩子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%B0%86%E5%9B%BE%E7%89%87%E7%A7%BB%E5%8A%A8%E5%92%8C%E6%9B%BF%E6%8D%A2%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E4%B8%BA%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E7%9A%84%E5%8A%9F%E8%83%BD%E5%90%88%E5%B9%B6%E5%88%B0%E4%B8%80%E4%B8%AA%E8%84%9A%E6%9C%AC%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">8.</span> <span class="nav-text">以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,14 +181,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -286,40 +296,50 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h3 id="regex-r’-’">regex = r’![.<em>?]((.</em>?))’</h3>
+    <div class="post-body" itemprop="articleBody"><h3 id="regex-r..">regex = r'![.<em>?]((.</em>?))'</h3>
 <p>这个正则表达式是用来匹配Markdown文档中图片链接格式的。</p>
 <p>让我们逐步分解一下这个正则表达式：</p>
 <ul>
-<li><code>!</code>: 在Markdown中，图片链接是以感叹号<code>!</code>开头的，所以正则表达式首先会查找感叹号。</li>
+<li><code>!</code>:
+在Markdown中，图片链接是以感叹号<code>!</code>开头的，所以正则表达式首先会查找感叹号。</li>
 <li><code>[`: 紧跟着感叹号的是一个左方括号`[`，在正则表达式中方括号是一个特殊字符，用于定义字符集（character class）。因此，我们需要使用反斜杠</code>来转义它，以匹配文本中的实际方括号。
 <ul>
-<li><code>.*?</code>: 然后是点号<code>*</code>和问号<code>?</code>的组合。 - 点号<code>.</code>代表任何单个字符（除了换行符）。 - 星号<code>*</code>表示重复前面的字符零次或多次。 - 问号<code>?</code>在这里是一个非贪婪（non-greedy）限定符，它告诉正则表达式引擎匹配尽可能少的字符，直到遇到下一个模式。</li>
+<li><code>.*?</code>:
+然后是点号<code>*</code>和问号<code>?</code>的组合。 -
+点号<code>.</code>代表任何单个字符（除了换行符）。 -
+星号<code>*</code>表示重复前面的字符零次或多次。 -
+问号<code>?</code>在这里是一个非贪婪（non-greedy）限定符，它告诉正则表达式引擎匹配尽可能少的字符，直到遇到下一个模式。</li>
 <li><code>\]``: 这部分是查找与前面的左方括号相对应的右方括号</code>]`，同样地，由于方括号在正则表达式中有特殊含义，我们使用反斜杠``进行转义。</li>
-</ul>
-</li>
-<li><code>\(</code>和<code>\)</code>: 这两个是用来匹配实际的左右圆括号<code>(</code>和<code>)</code>，这两个圆括号用来括起Markdown中图片链接的URL路径，因为在正则表达式中圆括号具有特殊的分组功能，所以需要使用反斜杠<code>\</code>来转义它们。</li>
+</ul></li>
+<li><code>\(</code>和<code>\)</code>:
+这两个是用来匹配实际的左右圆括号<code>(</code>和<code>)</code>，这两个圆括号用来括起Markdown中图片链接的URL路径，因为在正则表达式中圆括号具有特殊的分组功能，所以需要使用反斜杠<code>\</code>来转义它们。</li>
 <li><code>(.*?)</code>: 这是一个捕获组（capturing group）：
 <ul>
 <li>括号<code>()</code>定义了一个捕获组，用来捕获和存储匹配的数据以便将来引用。</li>
 <li>点号<code>.*</code>同样表示匹配任何字符零次或多次。</li>
 <li>问号<code>?</code>使得匹配变得非贪婪，即匹配尽量少的字符。</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>综上所述，正则表达式<code>r'!\[.*?\]\((.*?)\)'</code>整体查找的是一个标记了图片图像且不包含换行符的Markdown链接，它匹配以<code>![]</code>开始，紧跟一个括号内含任意字符（非贪婪匹配）的字符串。括号内的匹配部分（即图片的URL路径）被捕获以便之后使用。</p>
-<h3 id="每次上传博客md文件和图像需要g还是d">每次上传博客md文件和图像需要g还是d</h3>
+<h3
+id="每次上传博客md文件和图像需要g还是d">每次上传博客md文件和图像需要g还是d</h3>
 <p>当你上传博客的Markdown文件和图像后，通常你需要先执行<code>hexo generate</code>（或其简写<code>hexo g</code>）来生成最新的静态文件，然后执行<code>hexo deploy</code>（或其简写<code>hexo d</code>）将这些静态文件部署到服务器上。</p>
 <p>具体步骤通常是这样的：</p>
-<ol>
+<ol type="1">
 <li>更新Markdown文件和图像到你的博客项目目录中。</li>
 <li>在命令行中运行<code>hexo g</code>来生成网站的静态内容。这个过程会将你的Markdown和图像文件转换为网页文件，并将它们存放在<code>public</code>目录下。</li>
-<li>完成网站的静态内容生成后，运行<code>hexo d</code>来部署这些内容到指定的服务器上，例如GitHub Pages。</li>
+<li>完成网站的静态内容生成后，运行<code>hexo d</code>来部署这些内容到指定的服务器上，例如GitHub
+Pages。</li>
 </ol>
 <p>如果你已经配置了Hexo的一键部署功能，在运行<code>hexo d</code>时，Hexo会自动将<code>public</code>目录中的内容推送到远程仓库，网站即会相应更新。</p>
 <p>请记住，每次对博客内容做出更改，比如添加或编辑文章，或者更改图像等，你都需要运行这两个命令以确保你的更改被应用并展示在你的线上博客中。</p>
-<h3 id="error-cannot-spawn-git-hooks-pre-commit-No-such-file-or-directory-Everything-up-to-date-branch-‘master’-set-up-to-track-‘git-github-com-ltspace-ltspace-github-io-git-master’">error: cannot spawn .git/hooks/pre-commit: No such file or directory Everything up-to-date branch ‘master’ set up to track ‘git@github.com:ltspace/ltspace.github.io.git/master’.</h3>
+<h3
+id="error-cannot-spawn-.githookspre-commit-no-such-file-or-directory-everything-up-to-date-branch-master-set-up-to-track-gitgithub.comltspaceltspace.github.io.gitmaster.">error:
+cannot spawn .git/hooks/pre-commit: No such file or directory Everything
+up-to-date branch 'master' set up to track
+'git@github.com:ltspace/ltspace.github.io.git/master'.</h3>
 <p>这个错误信息表明Git在尝试执行<code>pre-commit</code>钩子时没有找到这个文件，这可能是由于以下几个原因造成的：</p>
-<ol>
+<ol type="1">
 <li><code>pre-commit</code>钩子文件可能没有正确放置在<code>.git/hooks</code>目录中。</li>
 <li><code>pre-commit</code>文件可能没有执行权限（在Windows环境下通常不需要设置执行权限，但有时可能受特定的环境配置影响）。</li>
 <li>如果你使用Windows，并且手动创建了<code>pre-commit</code>文件，可能会不知不觉地给文件加上了默认的<code>.txt</code>等扩展名。</li>
@@ -332,45 +352,84 @@
 <li>尝试直接在命令行中执行<code>pre-commit</code>钩子脚本来看是否能正确运行。如果不能，可能是脚本本身存在问题，或者你的环境中没有安装Python或者脚本的执行路径不对（在脚本的开头<code>#!/bin/sh</code>可能需要指向正确的shell路径，这在Windows中通常不是必须的，但是依赖于你的环境配置）。</li>
 </ul>
 <p>如果上述都没问题，你可以尝试删除<code>pre-commit</code>钩子并重新创建它。如果错误仍然存在，那么需要对你的Git安装和配置环境做更深入的查看。在极端情况下，你可能需要重新安装Git或者调查是否有其它系统级的问题影响到了Git钩子的执行。</p>
-<h3 id="git仓库里-git的名字是-deploy-git">git仓库里.git的名字是.deploy_git</h3>
-<p>如果你的 <code>.git</code> 文件夹的名字被改为了 <code>.deploy_git</code>，那很有可能是使用了Hexo的部署机制，特别是当采用<code>hexo-deployer-git</code>插件时，它会创建一个<code>.deploy_git</code>目录用来作为Git部署仓库。这个目录用于存储生成的静态文件，并将其推送到远程仓库，比如GitHub Pages。</p>
+<h3
+id="git仓库里.git的名字是.deploy_git">git仓库里.git的名字是.deploy_git</h3>
+<p>如果你的 <code>.git</code> 文件夹的名字被改为了
+<code>.deploy_git</code>，那很有可能是使用了Hexo的部署机制，特别是当采用<code>hexo-deployer-git</code>插件时，它会创建一个<code>.deploy_git</code>目录用来作为Git部署仓库。这个目录用于存储生成的静态文件，并将其推送到远程仓库，比如GitHub
+Pages。</p>
 <p><code>.deploy_git</code>目录与你本地编辑文档的Git仓库（通常用<code>.git</code>目录来管理）是分开的。Git钩子需要放在实际的Git仓库的<code>.git/hooks</code>目录中。如果你将钩子脚本放到了<code>.deploy_git</code>目录，那么它不会在你的常规Git操作中被触发。</p>
 <p>解决方法如下：</p>
-<ol>
+<ol type="1">
 <li>确认你的本地仓库（包含你编辑的源文件）的<code>.git</code>目录。它应该是你项目根目录的<code>.git</code>文件夹，而不是Hexo生成的<code>.deploy_git</code>文件夹。</li>
 <li>将你的<code>pre-commit</code>钩子脚本放入你项目根目录下的<code>.git/hooks</code>目录中。</li>
 <li>确保<code>pre-commit</code>钩子脚本具有正确的内容，并且能够在你尝试提交到你的源代码仓库时被触发。</li>
 </ol>
 <p>如果你尝试修改你的源代码并提交（例如使用<code>git commit</code>命令），那么钩子脚本应该在你项目的<code>.git/hooks</code>目录中被触发。如果你仅仅使用<code>hexo deploy</code>命令部署网站，它是不会触发这个钩子的，因为这通常会直接向<code>.deploy_git</code>仓库提交。</p>
-<h3 id="depoly-git里还有一个-git文件夹">.depoly_git里还有一个.git文件夹</h3>
+<h3
+id="depoly_git里还有一个.git文件夹">.depoly_git里还有一个.git文件夹</h3>
 <p>在Hexo项目中，<code>.deploy_git</code>文件夹是用于存储Hexo生成的静态文件以便部署到远程服务器的地方。当你使用<code>hexo-deployer-git</code>插件进行部署时，Hexo会将<code>public</code>目录中生成的静态文件复制到<code>.deploy_git</code>目录，并在该目录初始化一个新的Git仓库用于部署。</p>
 <p><code>.deploy_git</code>目录中的<code>.git</code>文件夹是这个用于部署的Git仓库的元数据存储位置，其中包含了版本控制的相关信息，如分支、提交历史、配置等。实际上，<code>.deploy_git</code>目录本身就像是一个完整的Git仓库。</p>
 <p>当你执行<code>hexo deploy</code>命令时，以下步骤会被触发：</p>
-<ol>
+<ol type="1">
 <li>Hexo调用<code>hexo generate</code>生成静态文件。</li>
 <li>生成的静态文件被复制到<code>.deploy_git</code>目录。</li>
-<li>在<code>.deploy_git</code>目录执行Git命令，将变更添加(commit)到本地仓库，并将其推送(push)到远程服务器（如GitHub Pages或其他托管服务）。</li>
+<li>在<code>.deploy_git</code>目录执行Git命令，将变更添加(commit)到本地仓库，并将其推送(push)到远程服务器（如GitHub
+Pages或其他托管服务）。</li>
 </ol>
 <p><code>.git</code>文件夹在<code>.deploy_git</code>目录中的作用是管理这一部署过程中所有的Git操作和历史记录。</p>
 <p>如果你在尝试运行Git钩子时遇到问题，请确保钩子被放置于你的源代码仓库的<code>.git/hooks</code>目录中，而不是<code>.deploy_git</code>目录或其内的<code>.git</code>目录中。这样，当你操作源代码仓库时（比如执行<code>git commit</code>），钩子才会被正确触发。</p>
-<p><img src="/images/image-20240309112717007.png" alt="image-20240309112717007"></p>
-<h3 id="额外再执行一遍git-commit的命令，只执行hexo-g-d">额外再执行一遍git commit的命令，只执行hexo g -d</h3>
-<p>如果要在执行 <code>hexo g -d</code> 的同时确保 <code>pre-commit</code> 钩子被触发，你需要理解 <code>git commit</code> 和 <code>hexo g -d</code> 在工作流程上的不同：</p>
+<figure>
+<img src="/images/image-20240309112717007.png"
+alt="image-20240309112717007" />
+<figcaption aria-hidden="true">image-20240309112717007</figcaption>
+</figure>
+<h3 id="额外再执行一遍git-commit的命令只执行hexo-g--d">额外再执行一遍git
+commit的命令，只执行hexo g -d</h3>
+<p>如果要在执行 <code>hexo g -d</code> 的同时确保
+<code>pre-commit</code> 钩子被触发，你需要理解 <code>git commit</code>
+和 <code>hexo g -d</code> 在工作流程上的不同：</p>
 <ul>
-<li><code>git commit</code> 是Git版本控制系统的命令，当你执行它时会触发 <code>.git/hooks</code> 中的钩子脚本。</li>
-<li><code>hexo g -d</code> 是Hexo的命令，用于生成静态网站内容并将其部署到配置的服务器上，不会直接触发Git的 <code>pre-commit</code> 钩子。</li>
+<li><code>git commit</code> 是Git版本控制系统的命令，当你执行它时会触发
+<code>.git/hooks</code> 中的钩子脚本。</li>
+<li><code>hexo g -d</code>
+是Hexo的命令，用于生成静态网站内容并将其部署到配置的服务器上，不会直接触发Git的
+<code>pre-commit</code> 钩子。</li>
 </ul>
-<p><img src="/images/image-20240309114430069.png" alt="image-20240309114430069"></p>
-<p><img src="/images/image-20240309114453958.png" alt="image-20240309114453958"></p>
-<h3 id="把钩子放到-deploy-git的-git里，hexo-g-d-直接执行钩子">把钩子放到.deploy_git的.git里，hexo g -d 直接执行钩子</h3>
-<p>理论上，你可以将钩子脚本放在 <code>.deploy_git/.git/hooks</code> 里面。因为这个 <code>.git</code> 目录确实是一个git仓库，所以它应该能认可钩子脚本。但这样做有一些需要考虑的地方：</p>
-<ol>
-<li><strong>Hexo 工作流程</strong>：通常，<code>.deploy_git</code> 仓库用于存放生成的静态文件，而不是源文件。如果你的钩子脚本主要是为了处理源文件（比如修改Markdown文件中的图片路径），那么它应该在源文件的 git 仓库中被触发执行。</li>
-<li><strong>自动化程度</strong>：把钩子放在 <code>.deploy_git</code> 中确实可以在执行 <code>hexo deploy</code> 时自动处理静态文件。但如果你的钩子脚本是为了更新本地的源Markdown文件的图片路径，那么这个静态文件是由源文件生成的，所以应该在更新源文件后、生成静态文件之前就处理好。</li>
-<li><strong>维护性</strong>：<code>.deploy_git</code> 目录通常不会提交到远程源码仓库，因为它的内容会在你运行 <code>hexo clean</code> 命令或者重新生成网站时被删除或覆盖。这意味着，如果你将钩子脚本放在 <code>.deploy_git/.git/hooks</code> 中，当 <code>.deploy_git</code> 目录被删除或重新生成时，你可能会丢失这个钩子脚本。</li>
+<figure>
+<img src="/images/image-20240309114430069.png"
+alt="image-20240309114430069" />
+<figcaption aria-hidden="true">image-20240309114430069</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240309114453958.png"
+alt="image-20240309114453958" />
+<figcaption aria-hidden="true">image-20240309114453958</figcaption>
+</figure>
+<h3
+id="把钩子放到.deploy_git的.git里hexo-g--d-直接执行钩子">把钩子放到.deploy_git的.git里，hexo
+g -d 直接执行钩子</h3>
+<p>理论上，你可以将钩子脚本放在 <code>.deploy_git/.git/hooks</code>
+里面。因为这个 <code>.git</code>
+目录确实是一个git仓库，所以它应该能认可钩子脚本。但这样做有一些需要考虑的地方：</p>
+<ol type="1">
+<li><strong>Hexo 工作流程</strong>：通常，<code>.deploy_git</code>
+仓库用于存放生成的静态文件，而不是源文件。如果你的钩子脚本主要是为了处理源文件（比如修改Markdown文件中的图片路径），那么它应该在源文件的
+git 仓库中被触发执行。</li>
+<li><strong>自动化程度</strong>：把钩子放在 <code>.deploy_git</code>
+中确实可以在执行 <code>hexo deploy</code>
+时自动处理静态文件。但如果你的钩子脚本是为了更新本地的源Markdown文件的图片路径，那么这个静态文件是由源文件生成的，所以应该在更新源文件后、生成静态文件之前就处理好。</li>
+<li><strong>维护性</strong>：<code>.deploy_git</code>
+目录通常不会提交到远程源码仓库，因为它的内容会在你运行
+<code>hexo clean</code>
+命令或者重新生成网站时被删除或覆盖。这意味着，如果你将钩子脚本放在
+<code>.deploy_git/.git/hooks</code> 中，当 <code>.deploy_git</code>
+目录被删除或重新生成时，你可能会丢失这个钩子脚本。</li>
 </ol>
-<p>总结来说，虽然理论上可以将钩子放在 <code>.deploy_git/.git/hooks</code> 中使其在执行 <code>hexo g -d</code> 时自动执行，但这样做并不是实践中常见的或推荐的工作流程。通常，我们会在源码仓库中处理这些任务，以确保源码的版本控制和钩子脚本可以一起正常工作。如果你确实需要自动化此过程，可能还是需要一个在源码阶段就能够触发的自定义的脚本或命令集。</p>
-<h3 id="以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码">以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码</h3>
+<p>总结来说，虽然理论上可以将钩子放在
+<code>.deploy_git/.git/hooks</code> 中使其在执行 <code>hexo g -d</code>
+时自动执行，但这样做并不是实践中常见的或推荐的工作流程。通常，我们会在源码仓库中处理这些任务，以确保源码的版本控制和钩子脚本可以一起正常工作。如果你确实需要自动化此过程，可能还是需要一个在源码阶段就能够触发的自定义的脚本或命令集。</p>
+<h3
+id="以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码">以下是将图片移动和替换绝对路径为相对路径的功能合并到一个脚本中的代码</h3>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"># 设置目标目录</span><br><span class="line">target_directory = <span class="string">&#x27;E:\\BLOG\\source\\images&#x27;</span></span><br><span class="line"></span><br><span class="line"># 配置你的Markdown文件的路径</span><br><span class="line">markdown_directory = <span class="string">&#x27;E:\\BLOG\\source\\_posts&#x27;</span></span><br><span class="line"># 配置存放图片的文件夹名称，相对于markdown_directory</span><br><span class="line">images_directory = <span class="string">&#x27;images&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 替换绝对路径为相对路径的函数</span><br><span class="line">def <span class="built_in">replace_image_path</span>(file_path, image_dir):</span><br><span class="line">    # 建立一个正则表达式模式匹配Markdown图片链接</span><br><span class="line">    regex = r<span class="number">&#x27;</span>!\[.*?\]\((.*?)\)&#x27;</span><br><span class="line"></span><br><span class="line">    # 读取Markdown文件内容</span><br><span class="line">    with <span class="built_in">open</span>(file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) as file:</span><br><span class="line">        content = file.<span class="built_in">read</span>()</span><br><span class="line"></span><br><span class="line">    # 使用正则表达式匹配并替换路径</span><br><span class="line">    new_content = content</span><br><span class="line">    matches = re.<span class="built_in">findall</span>(regex, content)</span><br><span class="line">    <span class="keyword">for</span> match in matches:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> match.<span class="built_in">startswith</span>(<span class="string">&#x27;http&#x27;</span>):  # 只替换本地文件路径</span><br><span class="line">            new_image_path = os.path.<span class="built_in">join</span>(<span class="string">&#x27;/&#x27;</span>, image_dir, os.path.<span class="built_in">basename</span>(match)).<span class="built_in">replace</span>(<span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">            new_content = new_content.<span class="built_in">replace</span>(match, new_image_path)</span><br><span class="line"></span><br><span class="line">    # 写回新的内容到文件</span><br><span class="line">    with <span class="built_in">open</span>(file_path, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) as file:</span><br><span class="line">        file.<span class="built_in">write</span>(new_content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 写一个函数来处理文件的移动，并替换Markdown文件中图片的引用</span><br><span class="line">def <span class="built_in">process_markdown_files</span>(md_directory, target_dir):</span><br><span class="line">    <span class="keyword">for</span> root, dirs, files in os.<span class="built_in">walk</span>(md_directory):</span><br><span class="line">        <span class="keyword">for</span> file in files:</span><br><span class="line">            <span class="keyword">if</span> file.<span class="built_in">lower</span>().<span class="built_in">endswith</span>(<span class="string">&#x27;.md&#x27;</span>):</span><br><span class="line">                full_path = os.path.<span class="built_in">join</span>(root, file)</span><br><span class="line">                <span class="built_in">move_images</span>(full_path, target_dir)</span><br><span class="line">                <span class="built_in">replace_image_path</span>(full_path, images_directory)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 处理文件移动的函数</span><br><span class="line">def <span class="built_in">move_images</span>(md_file_path, target_dir):</span><br><span class="line">    with <span class="built_in">open</span>(md_file_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) as file:</span><br><span class="line">        content = file.<span class="built_in">read</span>()</span><br><span class="line"></span><br><span class="line">    # 正则表达式查找所有 Markdown 图片链接</span><br><span class="line">    image_paths = re.<span class="built_in">findall</span>(r<span class="number">&#x27;</span>!\[.*?\]\((.*?)\)<span class="string">&#x27;, content)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    if not image_paths:</span></span><br><span class="line"><span class="string">        print(f&quot;No images found in &#123;md_file_path&#125;&quot;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    for image_path in image_paths:</span></span><br><span class="line"><span class="string">        # 检查是否是绝对路径</span></span><br><span class="line"><span class="string">        if os.path.isabs(image_path):</span></span><br><span class="line"><span class="string">            # 获取图片名和目标路径</span></span><br><span class="line"><span class="string">            image_name = os.path.basename(image_path)</span></span><br><span class="line"><span class="string">            destination = os.path.join(target_dir, image_name)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            # 显示正在处理的图片</span></span><br><span class="line"><span class="string">            print(f&quot;Processing image: &#123;image_name&#125;&quot;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            # 如果目标路径下没有这个文件再进行移动</span></span><br><span class="line"><span class="string">            if not os.path.exists(destination):</span></span><br><span class="line"><span class="string">                # 尝试移动图片，如果原始图片路径不存在则会抛出异常</span></span><br><span class="line"><span class="string">                try:</span></span><br><span class="line"><span class="string">                    shutil.move(image_path, destination)</span></span><br><span class="line"><span class="string">                    print(f&#x27;</span>Moved image &#123;image_name&#125; to &#123;target_dir&#125;<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">                except FileNotFoundError:</span></span><br><span class="line"><span class="string">                    print(f&#x27;</span>Image <span class="keyword">not</span> found at &#123;image_path&#125;, skipped moving<span class="number">&#x27;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(f<span class="number">&#x27;</span>Image &#123;image_name&#125; already exists in target directory; no action taken<span class="number">&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 开始处理Markdown文件和图片</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Processing Markdown files and images in &#123;markdown_directory&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">process_markdown_files</span>(markdown_directory, target_directory)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;All Markdown file image paths and images have been processed.&quot;</span>)</span><br></pre></td></tr></table></figure>
 
     </div>

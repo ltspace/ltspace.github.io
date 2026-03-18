@@ -30,7 +30,6 @@
 <meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-11_22-05-04.png">
 <meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-12_11-30-01.png">
 <meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-12_12-08-57.png">
-<meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-12_12-15-41.png">
 <meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-12_12-28-57.png">
 <meta property="og:image" content="https://www.lter.space/images/Snipaste_2024-03-12_12-48-11.png">
 <meta property="og:image" content="https://www.lter.space/images/image-20240312160729545.png">
@@ -173,7 +172,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">原理图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCB%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">PCB布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%9E%E7%BA%BF"><span class="nav-number">3.</span> <span class="nav-text">飞线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E9%93%9C"><span class="nav-number">4.</span> <span class="nav-text">覆铜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3D%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">3D模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E6%A0%B7"><span class="nav-number">6.</span> <span class="nav-text">打样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">一些细节图</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">原理图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pcb%E5%B8%83%E5%B1%80"><span class="nav-number">2.</span> <span class="nav-text">PCB布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%9E%E7%BA%BF"><span class="nav-number">3.</span> <span class="nav-text">飞线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E9%93%9C"><span class="nav-number">4.</span> <span class="nav-text">覆铜</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">3D模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E6%A0%B7"><span class="nav-number">6.</span> <span class="nav-text">打样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%BB%86%E8%8A%82%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">一些细节图</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -188,14 +187,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -304,52 +308,115 @@
 <p>选的都是贴片类型的元件，全贴在PCB上，甚至还打算加装一个外壳，</p>
 <p>为了缩减成本，选料也选了一阵子，最终缩减到104，</p>
 <p>然后打算SMT的时候发现最少贴俩，材料费200多，加工费400多。</p>
-<br>
+<p><br></p>
 <p>汗流浃背，问老师咋整，</p>
 <p>——要不我用用咱院里的电焊，买材料回来自己焊？</p>
-<br>
+<p><br></p>
 <p>老师也汗流浃背，说——</p>
 <p>其实不用做出成品，写在论文里就行。</p>
-<br>
+<p><br></p>
 <p>最后决定用嵌入式课程发的单片机简单实现一下。</p>
 <p>嵌入式主要感谢这个教程</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HH4y1o7EN/?spm_id_from=333.880.my_history.page.click&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">小白物联网智能家居毕设参考STM32+ESP8266/MQTT+OneNet+UniApp_哔哩哔哩_bilibili</a></p>
-<br>
-<br>
+<p><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HH4y1o7EN/?spm_id_from=333.880.my_history.page.click&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">小白物联网智能家居毕设参考STM32+ESP8266/MQTT+OneNet+UniApp_哔哩哔哩_bilibili</a></p>
+<p><br></p>
+<p><br></p>
 <p>好不容易整出来了，还是得展示一下。</p>
-<br>
+<p><br></p>
 <h3 id="原理图">原理图</h3>
 <p>右上角是我从嘉立创随便找的开源stm32最小系统板，</p>
-<p><a target="_blank" rel="noopener" href="https://oshwhub.com/dian-xie-eda/stm32f103c8t6">STM32F103C8T6 - 嘉立创EDA开源硬件平台 (oshwhub.com)</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://oshwhub.com/dian-xie-eda/stm32f103c8t6">STM32F103C8T6 -
+嘉立创EDA开源硬件平台 (oshwhub.com)</a></p>
 <p>除了stm32之外的是我自己整的，</p>
 <p>此处感谢这几个教程</p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fM411Z7cW?p=1&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">00-0-课程介绍_哔哩哔哩_bilibili</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13d4y1L7Rg/?spm_id_from=333.788&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">带着你从手册开始画板 STM最小系统板教程系列(一)_哔哩哔哩_bilibili</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12M4y1N7MZ/?spm_id_from=333.880.my_history.page.click&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">09 STM32F103C8T6最小系统_哔哩哔哩_bilibili</a></p>
-<p><img src="/images/image-20240312155432510.png" alt="image-20240312155432510"></p>
-<h3 id="PCB布局">PCB布局</h3>
+<p><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1fM411Z7cW?p=1&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">00-0-课程介绍_哔哩哔哩_bilibili</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV13d4y1L7Rg/?spm_id_from=333.788&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">带着你从手册开始画板
+STM最小系统板教程系列(一)_哔哩哔哩_bilibili</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12M4y1N7MZ/?spm_id_from=333.880.my_history.page.click&amp;vd_source=e404ad14246992bcc3e4ac52a33df8ed">09
+STM32F103C8T6最小系统_哔哩哔哩_bilibili</a></p>
+<figure>
+<img src="/images/image-20240312155432510.png"
+alt="image-20240312155432510" />
+<figcaption aria-hidden="true">image-20240312155432510</figcaption>
+</figure>
+<h3 id="pcb布局">PCB布局</h3>
 <p>按模块随便布的</p>
-<p><img src="/images/Snipaste_2024-03-11_22-05-04.png" alt="Snipaste_2024-03-11_22-05-04"></p>
+<figure>
+<img src="/images/Snipaste_2024-03-11_22-05-04.png"
+alt="Snipaste_2024-03-11_22-05-04" />
+<figcaption aria-hidden="true">Snipaste_2024-03-11_22-05-04</figcaption>
+</figure>
 <h3 id="飞线">飞线</h3>
 <p>没有什么是过孔解决不了的</p>
-<p><img src="/images/Snipaste_2024-03-12_11-30-01.png" alt="Snipaste_2024-03-12_11-30-01"></p>
-<p><img src="/images/Snipaste_2024-03-12_12-08-57.png" alt="Snipaste_2024-03-12_12-08-57"><img src="/images/Snipaste_2024-03-12_12-15-41.png" alt="Snipaste_2024-03-12_12-15-41"></p>
+<figure>
+<img src="/images/Snipaste_2024-03-12_11-30-01.png"
+alt="Snipaste_2024-03-12_11-30-01" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_11-30-01</figcaption>
+</figure>
+<p><img src="/images/Snipaste_2024-03-12_12-08-57.png"
+alt="Snipaste_2024-03-12_12-08-57" /><img
+src="/images/Snipaste_2024-03-12_12-15-41.png"
+alt="Snipaste_2024-03-12_12-15-41" /></p>
 <p>又去听了听教程，然后发现晶振里边走线不太好，紧急修改</p>
-<p><img src="/images/Snipaste_2024-03-12_12-28-57.png" alt="Snipaste_2024-03-12_12-28-57"></p>
+<figure>
+<img src="/images/Snipaste_2024-03-12_12-28-57.png"
+alt="Snipaste_2024-03-12_12-28-57" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_12-28-57</figcaption>
+</figure>
 <h3 id="覆铜">覆铜</h3>
-<p><img src="/images/Snipaste_2024-03-12_12-48-11.png" alt="Snipaste_2024-03-12_12-48-11"></p>
-<p><img src="/images/image-20240312160729545.png" alt="image-20240312160729545"></p>
-<h3 id="3D模型">3D模型</h3>
-<p><img src="/images/Snipaste_2024-03-12_15-22-45.png" alt="Snipaste_2024-03-12_15-22-45"></p>
-<p><img src="/images/Snipaste_2024-03-12_15-22-53.png" alt="Snipaste_2024-03-12_15-22-53"></p>
+<figure>
+<img src="/images/Snipaste_2024-03-12_12-48-11.png"
+alt="Snipaste_2024-03-12_12-48-11" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_12-48-11</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240312160729545.png"
+alt="image-20240312160729545" />
+<figcaption aria-hidden="true">image-20240312160729545</figcaption>
+</figure>
+<h3 id="d模型">3D模型</h3>
+<figure>
+<img src="/images/Snipaste_2024-03-12_15-22-45.png"
+alt="Snipaste_2024-03-12_15-22-45" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_15-22-45</figcaption>
+</figure>
+<figure>
+<img src="/images/Snipaste_2024-03-12_15-22-53.png"
+alt="Snipaste_2024-03-12_15-22-53" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_15-22-53</figcaption>
+</figure>
 <h3 id="打样">打样</h3>
-<p><img src="/images/Snipaste_2024-03-12_15-21-46.png" alt="Snipaste_2024-03-12_15-21-46"></p>
-<p><img src="/images/Snipaste_2024-03-12_15-21-19.png" alt="Snipaste_2024-03-12_15-21-19"></p>
+<figure>
+<img src="/images/Snipaste_2024-03-12_15-21-46.png"
+alt="Snipaste_2024-03-12_15-21-46" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_15-21-46</figcaption>
+</figure>
+<figure>
+<img src="/images/Snipaste_2024-03-12_15-21-19.png"
+alt="Snipaste_2024-03-12_15-21-19" />
+<figcaption aria-hidden="true">Snipaste_2024-03-12_15-21-19</figcaption>
+</figure>
 <p>最后选的白色</p>
 <h3 id="一些细节图">一些细节图</h3>
-<p><img src="/images/image-20240312161133819.png" alt="image-20240312161133819"></p>
-<p><img src="/images/image-20240312161149861.png" alt="image-20240312161149861"></p>
-<p><img src="/images/image-20240312161240286.png" alt="image-20240312161240286"></p>
+<figure>
+<img src="/images/image-20240312161133819.png"
+alt="image-20240312161133819" />
+<figcaption aria-hidden="true">image-20240312161133819</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240312161149861.png"
+alt="image-20240312161149861" />
+<figcaption aria-hidden="true">image-20240312161149861</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240312161240286.png"
+alt="image-20240312161240286" />
+<figcaption aria-hidden="true">image-20240312161240286</figcaption>
+</figure>
 <p>结语：</p>
 <p>当个layout工程师也挺好的</p>
 
