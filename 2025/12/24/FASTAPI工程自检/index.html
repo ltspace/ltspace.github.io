@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -277,60 +277,24 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><ol type="1">
-<li><strong>关键路径是否明确</strong>：请求链路里最慢的 1–3
-个步骤分别是什么（DB/网络/模型/磁盘）？有指标或日志能证明吗？</li>
-<li><strong>超时与重试是否完整</strong>：所有外部依赖（DB/HTTP/OSS/消息队列）是否设置了超时、重试策略与退避（并有上限）？<br />
-</li>
-<li><strong>资源池是否正确配置</strong>：数据库连接池 / HTTP 连接池 /
-线程池是否启用？池大小、队列长度、回收策略是否与并发量匹配？<br />
-</li>
-<li><strong>数据库连接方式是否一致</strong>：是否统一通过配置（DSN/环境变量）管理连接参数？是否区分读写、是否有连接健康检查与断线重连策略？<br />
-</li>
-<li><strong>负载类型是否判断正确</strong>：当前服务主要是 IO 密集还是
-CPU 密集？对应采用 async / 线程池 / 多进程 /
-任务队列的组合是否合理？<br />
-</li>
-<li><strong>并发模型是否清晰</strong>：进程数、线程数、协程数、worker
-数分别是多少？谁负责 CPU、谁负责
-IO？是否存在“重复并发”（多层叠加导致过载）？<br />
-</li>
-<li><strong>队列/Worker Pool
-是否可控</strong>：是否有最大并发、最大排队、任务超时、任务取消/幂等、失败重试与死信/告警机制？<br />
-</li>
-<li><strong>数据库查询是否可规模化</strong>：是否存在
-N+1、无索引全表扫、分页深翻、排序无索引等问题？关键 SQL 是否可 explain
-并持续监控？<br />
-</li>
-<li><strong>写入一致性与幂等</strong>：创建/更新接口是否有幂等键或唯一约束？重复请求是否会写出脏数据/重复数据？<br />
-</li>
-<li><strong>文件/对象存储写入是否安全</strong>：OSS
-路径是否全局唯一（避免同名覆盖）？是否采用“临时对象 +
-原子重命名/版本化”或“内容哈希命名”？<br />
-</li>
-<li><strong>数据校验与安全边界</strong>：入参是否做了 schema
-校验、大小限制、类型限制？上传是否限制格式/体积/数量并防止 zip bomb
-等风险？<br />
-</li>
-<li><strong>密码与密钥是否合规</strong>：密码是否使用强哈希（bcrypt/argon2），并有合适
-cost；密钥是否只从安全配置读取且不落日志？<br />
-</li>
-<li><strong>时间处理是否一致</strong>：时间统一用 UTC 还是
-epoch；是否避免使用已弃用/易混淆的 API（如某些 <code>utcnow</code>
-用法）并确保时区语义明确？<br />
-</li>
-<li><strong>API
-生命周期是否健康</strong>：是否避免使用已弃用的框架钩子/接口（例如
-FastAPI 的老式事件钩子），并跟随框架推荐方式实现启动/关闭？<br />
-</li>
-<li><strong>错误处理是否可运营</strong>：异常是否分级（4xx/5xx）、是否有可追踪的错误码、是否避免吞错；关键失败是否告警？<br />
-</li>
-<li><strong>日志/追踪/指标是否闭环</strong>：是否有
-request_id/trace_id；是否有 QPS、延迟分位数、错误率、DB/队列/worker
-指标；能否快速定位瓶颈？<br />
-</li>
-<li><strong>限流与熔断是否存在</strong>：对高成本路径（模型推理/大文件/外部依赖）是否有并发阈值、排队策略、熔断降级与保护开关？<br />
-</li>
+    <div class="post-body" itemprop="articleBody"><ol>
+<li><strong>关键路径是否明确</strong>：请求链路里最慢的 1–3 个步骤分别是什么（DB/网络/模型/磁盘）？有指标或日志能证明吗？</li>
+<li><strong>超时与重试是否完整</strong>：所有外部依赖（DB/HTTP/OSS/消息队列）是否设置了超时、重试策略与退避（并有上限）？</li>
+<li><strong>资源池是否正确配置</strong>：数据库连接池 / HTTP 连接池 / 线程池是否启用？池大小、队列长度、回收策略是否与并发量匹配？</li>
+<li><strong>数据库连接方式是否一致</strong>：是否统一通过配置（DSN/环境变量）管理连接参数？是否区分读写、是否有连接健康检查与断线重连策略？</li>
+<li><strong>负载类型是否判断正确</strong>：当前服务主要是 IO 密集还是 CPU 密集？对应采用 async / 线程池 / 多进程 / 任务队列的组合是否合理？</li>
+<li><strong>并发模型是否清晰</strong>：进程数、线程数、协程数、worker 数分别是多少？谁负责 CPU、谁负责 IO？是否存在“重复并发”（多层叠加导致过载）？</li>
+<li><strong>队列/Worker Pool 是否可控</strong>：是否有最大并发、最大排队、任务超时、任务取消/幂等、失败重试与死信/告警机制？</li>
+<li><strong>数据库查询是否可规模化</strong>：是否存在 N+1、无索引全表扫、分页深翻、排序无索引等问题？关键 SQL 是否可 explain 并持续监控？</li>
+<li><strong>写入一致性与幂等</strong>：创建/更新接口是否有幂等键或唯一约束？重复请求是否会写出脏数据/重复数据？</li>
+<li><strong>文件/对象存储写入是否安全</strong>：OSS 路径是否全局唯一（避免同名覆盖）？是否采用“临时对象 + 原子重命名/版本化”或“内容哈希命名”？</li>
+<li><strong>数据校验与安全边界</strong>：入参是否做了 schema 校验、大小限制、类型限制？上传是否限制格式/体积/数量并防止 zip bomb 等风险？</li>
+<li><strong>密码与密钥是否合规</strong>：密码是否使用强哈希（bcrypt/argon2），并有合适 cost；密钥是否只从安全配置读取且不落日志？</li>
+<li><strong>时间处理是否一致</strong>：时间统一用 UTC 还是 epoch；是否避免使用已弃用/易混淆的 API（如某些 <code>utcnow</code> 用法）并确保时区语义明确？</li>
+<li><strong>API 生命周期是否健康</strong>：是否避免使用已弃用的框架钩子/接口（例如 FastAPI 的老式事件钩子），并跟随框架推荐方式实现启动/关闭？</li>
+<li><strong>错误处理是否可运营</strong>：异常是否分级（4xx/5xx）、是否有可追踪的错误码、是否避免吞错；关键失败是否告警？</li>
+<li><strong>日志/追踪/指标是否闭环</strong>：是否有 request_id/trace_id；是否有 QPS、延迟分位数、错误率、DB/队列/worker 指标；能否快速定位瓶颈？</li>
+<li><strong>限流与熔断是否存在</strong>：对高成本路径（模型推理/大文件/外部依赖）是否有并发阈值、排队策略、熔断降级与保护开关？</li>
 <li><strong>部署与回滚是否可靠</strong>：配置是否可回滚；迁移是否可逆/可灰度；是否有健康检查、优雅停机与连接耗尽策略？</li>
 </ol>
 
