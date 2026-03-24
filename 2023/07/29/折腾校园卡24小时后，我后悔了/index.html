@@ -201,7 +201,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">折腾校园卡24小时后，我后悔了</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%98%E8%85%BE%E6%A0%A1%E5%9B%AD%E5%8D%A124%E5%B0%8F%E6%97%B6%E5%90%8E%E6%88%91%E5%90%8E%E6%82%94%E4%BA%86"><span class="nav-number">1.</span> <span class="nav-text">折腾校园卡24小时后，我后悔了</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -216,7 +216,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -227,7 +227,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -331,215 +331,401 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1>折腾校园卡24小时后，我后悔了</h1>
-<br>
+    <div class="post-body" itemprop="articleBody"><h1 id="折腾校园卡24小时后我后悔了">折腾校园卡24小时后，我后悔了</h1>
+<p><br></p>
 <p>我平常固定在图书馆某层中间的一个位置自习，旁边是一面巨大的窗子，采光好，还有窗台让我放书。</p>
-<p><img src="/images/image-20240310232415490.png" alt="image-20240310232415490"></p>
+<figure>
+<img src="/images/image-20240310232415490.png"
+alt="image-20240310232415490" />
+<figcaption aria-hidden="true">image-20240310232415490</figcaption>
+</figure>
 <p>某天正午，我觉得很热，打开了我那片区域图书馆的空调，一个女生接着走过去关了。</p>
 <p>好的，既然不让我开，那我搬去一直开着空调的地方。</p>
 <p>但是开着空调的地方采光又不好，来回搬书又太麻烦。</p>
 <p>于是我想，能不能预约两个座位，这样我就不用来回搬了，热的时候去开空调那里，暗的时候去采光好那里。</p>
-<br>
-<hr>
-<br>
+<p><br></p>
+<hr />
+<p><br></p>
 <p>想用两个座位，就需要另外一个人的学生卡。</p>
-<br>
+<p><br></p>
 <p>有个朋友，现在不在学校，未来一年也不会进图书馆，所以用他的学生卡就是最好的选择。</p>
 <p>征求他的同意之后，我们开始讨论如何让我在没有卡的情况下使用他的卡进行预约。</p>
 <p>他的卡留在了宿舍，但恰巧一年多前他买了个读卡器，恰巧当时他破解卡之后把dump文件（卡里边的内容）截图发给了我，截图里恰巧有我所需要的全部信息。</p>
 <p>恰巧我当时也很好奇，借用了他的读卡器，自己也暴力破解了自己的校园卡，但早就忘了当时把破解出来的dump文件存到了哪里，有没有删，</p>
 <p>于是我用everything正则搜*.dump，万幸，在回收站找到了当时校园卡和银行卡的dump文件，然后还原了回去。</p>
-<br>
-<p><img src="/images/image-20240310232433541.png" alt="image-20240310232433541"></p>
-<p>另外，某校用的学生卡应该是IC卡中的一种，NXP MIFARE Classic 1k，共分为12个扇区，</p>
-<br>
-<p><img src="/images/image-20240310232444160.png" alt="image-20240310232444160"></p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232433541.png"
+alt="image-20240310232433541" />
+<figcaption aria-hidden="true">image-20240310232433541</figcaption>
+</figure>
+<p>另外，某校用的学生卡应该是IC卡中的一种，NXP MIFARE Classic
+1k，共分为12个扇区，</p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232444160.png"
+alt="image-20240310232444160" />
+<figcaption aria-hidden="true">image-20240310232444160</figcaption>
+</figure>
 <p>0-5这六个扇区是密钥加密过的，nfc读取只能读出它位于0扇区0块的卡号，因为在nfc第一次读取卡的实体门卡页面中显示卡号，但模拟的时候提示说：加密卡只能模拟卡号（厂商码能不能不确定），</p>
 <p>用十六进制查看器可以看出，后边的12345里存放了学号与姓名和一些其他的东西。</p>
-<br>
-<p><img src="/images/image-20240310232509156.png" alt="image-20240310232509156"></p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232509156.png"
+alt="image-20240310232509156" />
+<figcaption aria-hidden="true">image-20240310232509156</figcaption>
+</figure>
 <p>但手机和手环的nfc依然可以预约图书馆，说明图书馆的读卡机只需要读到卡号，不需要加密卡的其他部分，所以我只需要用nfc模拟出他的卡号，当然，这是我后期才明白过来的。</p>
 <p>通过补办新卡让旧卡报废来看，卡号这玩意儿也是唯一的，估计是补办的时候会把新卡号插到数据库里覆盖旧卡号，达到每人一卡的功能。</p>
-<br>
-<hr>
-<br>
+<p><br></p>
+<hr />
+<p><br></p>
 <p>于是现在的总体情况是，我拥有我卡的dump文件，他卡的dump文件，还有一张我在用的校园卡，还有一张之前找不到的，补办之后又找到，所以现在报废了的卡，还有一部root了的手机，</p>
 <p>其它包括读卡器写卡器空白卡什么的，统统没有。</p>
 <p>最终目的是用手机模拟出他的卡。</p>
-<br>
+<p><br></p>
 <p>于是开始尝试各个软件能不能用，分别有什么功能，这是一个漫长的过程，</p>
 <p>最后选定了四个软件，通过他们功能的配合达成目的，分别是</p>
 <p>NFC Card Emulator Pro (root)</p>
 <p>NFC Reader Tool Pro</p>
-<p>Mifare Classic  Tool</p>
+<p>Mifare Classic Tool</p>
 <p>NFC Tools Pro</p>
-<br>
-<p><img src="/images/image-20240310232531502.png" alt="image-20240310232531502"></p>
-<p><img src="/images/image-20240310232539840.png" alt="image-20240310232539840"></p>
-<p>MCT就是Mifare Classic Tool，它无法自己添加dump，只能用现场读入的标签信息保存后再进行写入或修改，我主要用来读卡后写卡。</p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232531502.png"
+alt="image-20240310232531502" />
+<figcaption aria-hidden="true">image-20240310232531502</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310232539840.png"
+alt="image-20240310232539840" />
+<figcaption aria-hidden="true">image-20240310232539840</figcaption>
+</figure>
+<p>MCT就是Mifare Classic
+Tool，它无法自己添加dump，只能用现场读入的标签信息保存后再进行写入或修改，我主要用来读卡后写卡。</p>
 <p>首先，0-5扇区是加密了的，MCT的读取标签需要密钥，写卡也是，但我只有dump文件，没有密钥，</p>
-<p><img src="/images/image-20240310232553736.png" alt="image-20240310232553736"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232553736.png"
+alt="image-20240310232553736" />
+<figcaption aria-hidden="true">image-20240310232553736</figcaption>
+</figure>
+<p><br></p>
 <p>但有了dump文件就相当于拥有了解密后的卡，按理来说能够从dump里反推出它的密钥。</p>
-<p>所以我找到了NFC Reader Tool Pro，它可以自己写dump，然后通过dump文件自动生成密钥文件，</p>
+<p>所以我找到了NFC Reader Tool
+Pro，它可以自己写dump，然后通过dump文件自动生成密钥文件，</p>
 <p>当然，写的过程比较痛苦，因为只能在它自己新建的dump文件上修改，改成自己需要的，所以要自己在手机上写那6个扇区的数字。</p>
 <p>最后每个dump文件都生成了一个六行的密钥，再导入到MCT中，此时发现可以成功读卡了。</p>
-<br>
+<p><br></p>
 <p>此时我的手机莫名其妙开始疯狂自动重启，我排除了过热原因，还有电池原因（半个月前刚换），剩下的有可能是电源键问题，因为最近电源键不太灵敏，还有可能是换电池的时候线装的糙了，电池的断触问题，或者主板问题。</p>
 <p>反正无论是什么，都很吓人，于是我当天备份了一遍我的手机数据（后文会极其感谢自己此时备份了一下）。</p>
-<br>
+<p><br></p>
 <p>有了密钥，我就可以用MCT读写我的卡，此时我尝试了两种情况，</p>
 <p>第一就是格式化，实际操作后发现除了0扇区0块，其它都能格式化到出厂状态，也就是这样</p>
-<p><img src="/images/image-20240310232605791.png" alt="image-20240310232605791"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232605791.png"
+alt="image-20240310232605791" />
+<figcaption aria-hidden="true">image-20240310232605791</figcaption>
+</figure>
+<p><br></p>
 <p>之后我用这个卡去图书馆刷卡机上刷了一下，发现还是可以读取，说明图书馆真的只认卡号（或加上厂商码）。</p>
-<p><img src="/images/image-20240310232615875.png" alt="image-20240310232615875"></p>
-<p><img src="/images/image-20240310232625800.png" alt="image-20240310232625800"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232615875.png"
+alt="image-20240310232615875" />
+<figcaption aria-hidden="true">image-20240310232615875</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310232625800.png"
+alt="image-20240310232625800" />
+<figcaption aria-hidden="true">image-20240310232625800</figcaption>
+</figure>
+<p><br></p>
 <p>第二就是将他的dump文件中除了卡号的部分写入到我的卡中，也就是一个卡里有我的卡号，和解密后他的学号姓名，</p>
 <p>下午去食堂吃饭时刷了一下，发现没有反应，说明食堂消费的读卡机不仅需要卡号，还需要同时验证里边的加密信息。</p>
-<br>
-<p><img src="/images/image-20240310232637850.png" alt="image-20240310232637850"></p>
-<br>
-<p><img src="/images/image-20240310232645467.png" alt="image-20240310232645467"></p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232637850.png"
+alt="image-20240310232637850" />
+<figcaption aria-hidden="true">image-20240310232637850</figcaption>
+</figure>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232645467.png"
+alt="image-20240310232645467" />
+<figcaption aria-hidden="true">image-20240310232645467</figcaption>
+</figure>
 <p>后来我反应过来，</p>
 <p>既然图书馆只需要卡号，我也有了他的卡号，</p>
 <p>我的手机又是root了的，理论上说我对我的手机具有绝对掌控权，</p>
 <p>所以按理说我可以通过直接修改nfc配置文件的方式，让nfc直接伪装为他的卡号。</p>
-<br>
+<p><br></p>
 <p>但来回改配置文件肯定很麻烦，因为我不止要用他这一个卡，而且同时还需要修改卡的频率之类的，</p>
-<br>
-<p><img src="/images/image-20240310232701127.png" alt="image-20240310232701127"></p>
-<br>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232701127.png"
+alt="image-20240310232701127" />
+<figcaption aria-hidden="true">image-20240310232701127</figcaption>
+</figure>
+<p><br></p>
 <p>所以我开始寻找，有没有能自动化的帮我做好这一切伪装的软件。</p>
-<br>
-<p>有是有，但看起来做的很好的NFC Tools注册就需要49.9，其它的非开源软件大同小异，都是在让我还未确定他们的软件能不能正常工作时就要收我十几块钱，我这人比较抠搜，而且找不到破解版。</p>
-<p><img src="/images/image-20240310232710377.png" alt="image-20240310232710377"></p>
+<p><br></p>
+<p>有是有，但看起来做的很好的NFC
+Tools注册就需要49.9，其它的非开源软件大同小异，都是在让我还未确定他们的软件能不能正常工作时就要收我十几块钱，我这人比较抠搜，而且找不到破解版。</p>
+<figure>
+<img src="/images/image-20240310232710377.png"
+alt="image-20240310232710377" />
+<figcaption aria-hidden="true">image-20240310232710377</figcaption>
+</figure>
 <p><br><br></p>
-<p>后来，我终于发现了一款NFC Card Emulator Pro (root)：NFC卡模拟，它有手动添加卡号再用nfc模拟的功能，当然，需要root权限，谷歌商店6美金，没钱，用的52pojie的版本。</p>
+<p>后来，我终于发现了一款NFC Card Emulator Pro
+(root)：NFC卡模拟，它有手动添加卡号再用nfc模拟的功能，当然，需要root权限，谷歌商店6美金，没钱，用的52pojie的版本。</p>
 <p>但无论如何，它都提示我获取不到root权限，而且它并没有给magisk发出弹窗的请求，</p>
-<p><img src="/images/image-20240310232725353.png" alt="image-20240310232725353"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232725353.png"
+alt="image-20240310232725353" />
+<figcaption aria-hidden="true">image-20240310232725353</figcaption>
+</figure>
+<p><br></p>
 <p>但我看到，我的那些步数修改器和爱玩机工作箱之类的需要root权限的软件都是在正常运行的，magisk也正常，甚至把请求响应改成自动允许也不行，我百思不得其解，于是放弃。</p>
-<p><img src="/images/image-20240310232735014.png" alt="image-20240310232735014"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232735014.png"
+alt="image-20240310232735014" />
+<figcaption aria-hidden="true">image-20240310232735014</figcaption>
+</figure>
+<p><br></p>
 <p>我接着转向寻找开源软件，但它们都是最晚4年前，最早能追溯到7年前的仓库，对于现在的安卓11来说可能太过时了，于是在功能上都出现了一些严重的问题，还有的甚至没有发行版，需要我自己用AndroidStudio构建。</p>
-<p><img src="/images/image-20240310232744665.png" alt="image-20240310232744665"></p>
-<br>
-<p>（后期get root access后发现也不能用，且作者多年前看到有比他好的NFC卡模拟pro之后就不再维护了）</p>
-<p><img src="/images/image-20240310232752539.png" alt="image-20240310232752539"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232744665.png"
+alt="image-20240310232744665" />
+<figcaption aria-hidden="true">image-20240310232744665</figcaption>
+</figure>
+<p><br></p>
+<p>（后期get root
+access后发现也不能用，且作者多年前看到有比他好的NFC卡模拟pro之后就不再维护了）</p>
+<figure>
+<img src="/images/image-20240310232752539.png"
+alt="image-20240310232752539" />
+<figcaption aria-hidden="true">image-20240310232752539</figcaption>
+</figure>
+<p><br></p>
 <p>这时陷入了僵局，哪个方法都走不通。我就只能去继续学最原始的直接修改libnfc.conf的方法，</p>
-<p>但是直接修改系统的文件，首先你得先找到它，这就需要一个能获取root权限的文件资源管理器，最终选定了MT管理器，真的很好用 ，但是它也无法获取root权限，我就开始怀疑是magisk的问题，</p>
+<p>但是直接修改系统的文件，首先你得先找到它，这就需要一个能获取root权限的文件资源管理器，最终选定了MT管理器，真的很好用
+，但是它也无法获取root权限，我就开始怀疑是magisk的问题，</p>
 <p>对于NFC卡模拟那个软件，我也还是不甘心，</p>
 <p>此时我突然看到一个贴吧的帖子，一个人说，要主动给软件授权root的话，可以在爱玩机工具箱里找到应用管理里的唤醒root权限，</p>
-<p><img src="/images/image-20240310232804770.png" alt="image-20240310232804770"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232804770.png"
+alt="image-20240310232804770" />
+<figcaption aria-hidden="true">image-20240310232804770</figcaption>
+</figure>
+<p><br></p>
 <p>就这么寥寥几句，下边好像只有两个人说他的方法有用，但却解决了我的众多问题，</p>
 <p>正好我也有爱玩机工具箱，上手一试，真的成功了，那两个无法自己获取root权限的软件也在magisk的超级用户栏里出现了对应的按钮。</p>
-<p><img src="/images/image-20240310232814804.png" alt="image-20240310232814804"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232814804.png"
+alt="image-20240310232814804" />
+<figcaption aria-hidden="true">image-20240310232814804</figcaption>
+</figure>
+<p><br></p>
 <p>我大喜过望，我以为现在万事俱备，东风已来，其实路途才刚刚过半。</p>
 <p>在赋权之后，我颤抖的打开了NFC模拟器，输入他的卡号，</p>
 <p>创建成功，yes！</p>
-<br>
+<p><br></p>
 <p>但开始nfc模拟的时候，又出现了一个问题：</p>
 <p>软件提示我的vendor分区无法读写。</p>
-<p><img src="/images/image-20240310232825585.png" alt="image-20240310232825585"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232825585.png"
+alt="image-20240310232825585" />
+<figcaption aria-hidden="true">image-20240310232825585</figcaption>
+</figure>
+<p><br></p>
 <p>也就是说，要读写的nfc配置文件放在vendor分区里，而那个分区我现在依然没有读写的权力。</p>
 <p>于是我需要去找到，让vendor分区能被修改的方法。</p>
-<br>
-<p><img src="/images/image-20240310232837432.png" alt="image-20240310232837432"></p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232837432.png"
+alt="image-20240310232837432" />
+<figcaption aria-hidden="true">image-20240310232837432</figcaption>
+</figure>
 <p>（此时，刷入magisk卡模块这个方法失败）</p>
-<br>
-<p><img src="/images/image-20240310232847093.png" alt="image-20240310232847093"></p>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232847093.png"
+alt="image-20240310232847093" />
+<figcaption aria-hidden="true">image-20240310232847093</figcaption>
+</figure>
 <p>我没想到，修改vendor分区是一个巨大的难题，网上几乎所有的方法在Android11之后都失效了，所以我按照时间搜索近一年内的解锁vendor教程，只找到了一个看起来可行，且详细教学的帖子，</p>
 <p>出厂安卓11机型解锁system分区教程_安卓11解锁system分区</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/oAiYinSiTan12/article/details/119655706">https://blog.csdn.net/oAiYinSiTan12/article/details/119655706</a></p>
+<p>https://blog.csdn.net/oAiYinSiTan12/article/details/119655706</p>
 <p>如文中所说，解锁system的原理就是去除vbmeta检验(简称AVB2.0检验)</p>
-<br>
+<p><br></p>
 <p>整体的流程看起来复杂，其实——做起来更复杂，</p>
 <p>总体流程是，将vendor分区提取出来，修改/vendor/etc/fstab.qcom，去除里边的vab选项，打包回去，再刷入手机，</p>
 <p>每一步里都有大大小小的坑。</p>
 <p>提取vendor这一步，我手机上有termux，在termux里安装ubuntu，ubuntu里装上DNA工具，DNA工具的gitee主页的readme文件因为“可能违规”无法显示（离谱），所以需要clone到本地才能查看，</p>
-<p><img src="/images/image-20240310232907609.png" alt="image-20240310232907609"></p>
-<br>
-<p>接着，提取vendor分区的脚本，这里又有坑，<a target="_blank" rel="noopener" href="http://xn--www-p18d0bzkc625ck34a13ud75ce3ck22egzfje590edh4azpe.bilibili.com/video/BV1xV411n7Ys/">就像这个视频教程下面第一个评论www.bilibili.com/video/BV1xV411n7Ys/</a></p>
-<p>“fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img<br>
-的缘故，并没有VAB分区，所以脚本里的vender_a/vender_b需要变更成vender，同理 system亦是如此。最后fastbootd刷入vender.img也没有vender_a/vender_b，使用fastboot flash vender vender.img刷入即可。”</p>
-<p>我之前也试着执行过fastboot --disable-verity --disable-verification flash vbmeta vbmeta.img这条命令，和他的情况是一样的，</p>
+<figure>
+<img src="/images/image-20240310232907609.png"
+alt="image-20240310232907609" />
+<figcaption aria-hidden="true">image-20240310232907609</figcaption>
+</figure>
+<p><br></p>
+<p>接着，提取vendor分区的脚本，这里又有坑，就像这个视频教程下面第一个评论www.bilibili.com/video/BV1xV411n7Ys/</p>
+<p>“fastboot --disable-verity --disable-verification flash vbmeta
+vbmeta.img
+的缘故，并没有VAB分区，所以脚本里的vender_a/vender_b需要变更成vender，同理
+system亦是如此。最后fastbootd刷入vender.img也没有vender_a/vender_b，使用fastboot
+flash vender vender.img刷入即可。”</p>
+<p>我之前也试着执行过fastboot --disable-verity --disable-verification
+flash vbmeta vbmeta.img这条命令，和他的情况是一样的，</p>
 <p>但后来我发现，mi10的手机架构好像本来就没有ab分区，所以需要把脚本里的vendor_a改成vendor，后边的fastbootd刷入vendor时也是一样。</p>
-<p><img src="/images/image-20240310232923392.png" alt="image-20240310232923392"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232923392.png"
+alt="image-20240310232923392" />
+<figcaption aria-hidden="true">image-20240310232923392</figcaption>
+</figure>
+<p><br></p>
 <p>下一步修改，要注意我们现在用的DNA分解出来的size.txt不在视频里的地方了，需要自己在那几个文件夹下找一找。</p>
 <p>开始用DNA打包的时候，还要注意，视频里的08是合成img，我们现在clone到的版本改成了06是img，而且下面的命令提示也改变了，最后打包出来的名字也不是vendor_dna.img而是直接的vendor.img，放的目录也变了，也需要自己去找找。</p>
-<p><img src="/images/image-20240310232931612.png" alt="image-20240310232931612"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232931612.png"
+alt="image-20240310232931612" />
+<figcaption aria-hidden="true">image-20240310232931612</figcaption>
+</figure>
+<p><br></p>
 <p>打包之后就可以刷入了，没想到我在这儿出现了严重的岔子，手机变砖了。</p>
-<p><img src="/images/image-20240310232939313.png" alt="image-20240310232939313"></p>
-<br>
-<p>由于刷入的时候一直提示：Not enough space to resize partition，空间不足，于是我开始删其它的分区，但无论怎么删，还是一直提示空间不足，我渐渐开始急了，</p>
+<figure>
+<img src="/images/image-20240310232939313.png"
+alt="image-20240310232939313" />
+<figcaption aria-hidden="true">image-20240310232939313</figcaption>
+</figure>
+<p><br></p>
+<p>由于刷入的时候一直提示：Not enough space to resize
+partition，空间不足，于是我开始删其它的分区，但无论怎么删，还是一直提示空间不足，我渐渐开始急了，</p>
 <p>最后直接fastboot -w，意味着把我所有的用户数据也抹除了，</p>
-<p><img src="/images/image-20240310232946373.png" alt="image-20240310232946373"></p>
-<br>
-<p><img src="/images/image-20240310232956621.png" alt="image-20240310232956621"></p>
-<br>
+<figure>
+<img src="/images/image-20240310232946373.png"
+alt="image-20240310232946373" />
+<figcaption aria-hidden="true">image-20240310232946373</figcaption>
+</figure>
+<p><br></p>
+<figure>
+<img src="/images/image-20240310232956621.png"
+alt="image-20240310232956621" />
+<figcaption aria-hidden="true">image-20240310232956621</figcaption>
+</figure>
+<p><br></p>
 <p>此时终于能把vendor刷进去了。</p>
-<p><img src="/images/image-20240310233004801.png" alt="image-20240310233004801"></p>
-<br>
+<figure>
+<img src="/images/image-20240310233004801.png"
+alt="image-20240310233004801" />
+<figcaption aria-hidden="true">image-20240310233004801</figcaption>
+</figure>
+<p><br></p>
 <p>但由于我在刷的过程中出了很多奇怪的问题，所以刷入之后重启时，开始自动无限重启。</p>
-<p><img src="/images/image-20240310233012266.png" alt="image-20240310233012266"></p>
-<br>
+<figure>
+<img src="/images/image-20240310233012266.png"
+alt="image-20240310233012266" />
+<figcaption aria-hidden="true">image-20240310233012266</figcaption>
+</figure>
+<p><br></p>
 <p>后来我又把自己备份的原来的vendor刷了进去，但无力回天，还是在无限重启，所以我决定直接进recovery双清，然后线刷进系统。</p>
-<p><img src="/images/image-20240310233020510.png" alt="image-20240310233020510"></p>
-<br>
-<p>后来，线刷出了问题，找了二十分钟问题之后，发现是我下错了线刷包型号，10pro下成了10…极其低级的错误，但也合理，当时接近一点，我的脑子已经不太转动了。</p>
-<p><img src="/images/image-20240310233031177.png" alt="image-20240310233031177"></p>
-<p><img src="/images/image-20240310233038422.png" alt="image-20240310233038422"></p>
-<br>
+<figure>
+<img src="/images/image-20240310233020510.png"
+alt="image-20240310233020510" />
+<figcaption aria-hidden="true">image-20240310233020510</figcaption>
+</figure>
+<p><br></p>
+<p>后来，线刷出了问题，找了二十分钟问题之后，发现是我下错了线刷包型号，10pro下成了10...极其低级的错误，但也合理，当时接近一点，我的脑子已经不太转动了。</p>
+<figure>
+<img src="/images/image-20240310233031177.png"
+alt="image-20240310233031177" />
+<figcaption aria-hidden="true">image-20240310233031177</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310233038422.png"
+alt="image-20240310233038422" />
+<figcaption aria-hidden="true">image-20240310233038422</figcaption>
+</figure>
+<p><br></p>
 <p>我又去下载了一个mi10pro对应的包，因为小米社区的链接下得很慢，当时已经一两点了，所以我去别的地方找了一个下的快的（也没快多少），结果解压之后才发现是卡刷包，意味着又下错了，又浪费了5G流量和半小时。</p>
 <p>最后，我终于长了记性，去小米社区下了10pro线刷包，凌晨网很慢，边看古相思曲边等，等了一小时。</p>
 <p>刷入的时候又出了幺蛾子，当时看古相思曲的播放窗口正好挡住了下边的这个选项，默认选项是全部删除并lock，我就直接开始刷入，当我发现的时候，已经刷入了一半了，</p>
 <p>当时一瞬间汗毛直立，头皮发麻，要是刷入之后还重启不了，我还把BL锁又锁上了，那在未解BL锁的情况下想刷机可就难如登天了。</p>
 <p>最后还好刷入之后成功开机了，但同时BL锁被锁上了。</p>
-<p><img src="/images/image-20240310233048251.png" alt="image-20240310233048251"></p>
-<br>
+<figure>
+<img src="/images/image-20240310233048251.png"
+alt="image-20240310233048251" />
+<figcaption aria-hidden="true">image-20240310233048251</figcaption>
+</figure>
+<p><br></p>
 <p>但我还想再刷入一遍修改过的vendor试一试，所以又得打开BL锁，于是又要解锁，还好第一次解锁之后不需要再等168小时，我又开了BL锁，之后又刷入了一遍vendor，这次刷入成功了，手机不再无限重启了。</p>
-<br>
+<p><br></p>
 <p>最初的目标，解锁vendor是为了让NFC模拟器获取修改vendor的权限，</p>
 <p>经过这么一折腾，我的手机恢复到了出厂状态，用户数据也没了，但我在两天前备份了一遍手机，所以再导入。</p>
-<p>重新装完一遍系统之后再模拟，发现又在报错，之前是vendor：read only file，现在的报错变成了No space left on device，但这次，帮助手册中的刷入magisk卡模拟成功了。</p>
-<p><img src="/images/image-20240310233057214.png" alt="image-20240310233057214"></p>
-<br>
+<p>重新装完一遍系统之后再模拟，发现又在报错，之前是vendor：read only
+file，现在的报错变成了No space left on
+device，但这次，帮助手册中的刷入magisk卡模拟成功了。</p>
+<figure>
+<img src="/images/image-20240310233057214.png"
+alt="image-20240310233057214" />
+<figcaption aria-hidden="true">image-20240310233057214</figcaption>
+</figure>
+<p><br></p>
 <p>最后，在凌晨的将近五点，我终于模拟成功了。</p>
-<p><img src="/images/image-20240310233107013.png" alt="image-20240310233107013"></p>
-<br>
-<hr>
+<figure>
+<img src="/images/image-20240310233107013.png"
+alt="image-20240310233107013" />
+<figcaption aria-hidden="true">image-20240310233107013</figcaption>
+</figure>
+<p><br></p>
+<hr />
 <p>你以为是个热血沸腾的good ending？不是的。</p>
-<p><img src="/images/image-20240310233140642.png" alt="image-20240310233140642"></p>
-<p><img src="/images/image-20240310233148562.png" alt="image-20240310233148562"></p>
-<p><img src="/images/image-20240310233157987.png" alt="image-20240310233157987"></p>
-<p><img src="/images/image-20240310233206027.png" alt="image-20240310233206027"></p>
-<p><img src="/images/image-20240310233212312.png" alt="image-20240310233212312"></p>
+<figure>
+<img src="/images/image-20240310233140642.png"
+alt="image-20240310233140642" />
+<figcaption aria-hidden="true">image-20240310233140642</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310233148562.png"
+alt="image-20240310233148562" />
+<figcaption aria-hidden="true">image-20240310233148562</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310233157987.png"
+alt="image-20240310233157987" />
+<figcaption aria-hidden="true">image-20240310233157987</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310233206027.png"
+alt="image-20240310233206027" />
+<figcaption aria-hidden="true">image-20240310233206027</figcaption>
+</figure>
+<figure>
+<img src="/images/image-20240310233212312.png"
+alt="image-20240310233212312" />
+<figcaption aria-hidden="true">image-20240310233212312</figcaption>
+</figure>
 <p>凌晨模拟成功后，我以为没问题了，于是买了杯咖啡，想去校外取咖啡的时候顺便经过图书馆测验一下就走，接着回来写这篇文章。</p>
-<br>
+<p><br></p>
 <p>但没想到它模拟出来的是随机数。</p>
 <p>在图书馆二楼刷卡机前找了个凳子，调试了半小时，无果，</p>
 <p>图书馆没开空调，热的要死，去拿咖啡，</p>
 <p>在咖啡店里坐着，继续调试了半小时，无果。</p>
-<br>
+<p><br></p>
 <p>最后受不了了，索性放弃。</p>
-<hr>
+<hr />
 <p>我在一开始就知道，我碰到的这些所有的问题其实几乎都能通过简简单单的一个CUID白卡解决，</p>
 <p>过程中，我也无数次想到，如果有个白卡我就不用绕这么大一个圈子了，</p>
 <p>所以我当时就下单了读卡器，商家赠送ID，UID，CUID，7月31送到。</p>
-<p><img src="/images/image-20240310233222395.png" alt="image-20240310233222395"></p>
-<br>
+<figure>
+<img src="/images/image-20240310233222395.png"
+alt="image-20240310233222395" />
+<figcaption aria-hidden="true">image-20240310233222395</figcaption>
+</figure>
+<p><br></p>
 <p>但我就是想看看，在送到前的这几天里，我不靠读卡器和空白卡，仅靠现有的资源能不能解决问题。</p>
 <p>虽然我失败了，但结论其实是能，只是我现在已经不想再去探究到底哪里出了问题了。</p>
 <p>但我还是后悔了，因为我耗费了整整两天的时间，如果我手边有个五块钱的白卡，dump写入—导入手机NFC—完成，所有的流程不会超过五分钟。</p>
-<p>为什么过程里我一直不想放弃，因为每一步看起来都像是最后一步——获取了root权限应该就能模拟成功了——vendor重新挂载应该就能成功了——刷入之后应该就能成功了——变砖了，但线刷之后再刷入一遍应该就能成功了…</p>
+<p>为什么过程里我一直不想放弃，因为每一步看起来都像是最后一步——获取了root权限应该就能模拟成功了——vendor重新挂载应该就能成功了——刷入之后应该就能成功了——变砖了，但线刷之后再刷入一遍应该就能成功了......</p>
 <p>没想到它就像一个无限往下递归的栈，我困在沉没成本里，永远不知道自己下一步是不是弹出。</p>
 <p>我不想在这结尾处上升到浪子回头、及时收手之类的话，没有意义，</p>
 <p>因为我知道，即使我现在后悔浪费了时间，下一次面对类似情境时，我也依然会去全力探究，</p>

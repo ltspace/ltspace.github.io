@@ -29,8 +29,8 @@
 <meta property="article:published_time" content="2026-03-18T04:00:00.000Z">
 <meta property="article:modified_time" content="2026-03-18T09:20:58.375Z">
 <meta property="article:author" content="LT">
-<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="故障排查">
+<meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="阿里云">
 <meta name="twitter:card" content="summary">
@@ -161,7 +161,14 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Grafana-Feishu 镜像拉取故障排障记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%B0%9D%E8%AF%95%E6%9C%AC%E5%9C%B0%E6%89%93%E5%8C%85%E9%95%9C%E5%83%8F%E5%B9%B6%E4%BC%A0%E5%88%B0%E8%8A%82%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">第一阶段：尝试本地打包镜像并传到节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.2.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">再次遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%94%B9%E8%B5%B0%E9%98%BF%E9%87%8C%E4%BA%91-ACR-%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.</span> <span class="nav-text">第二阶段：改走阿里云 ACR 镜像仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E8%AF%AF%E5%8C%BA"><span class="nav-number">1.2.1.</span> <span class="nav-text">初始误区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F%E5%88%B0-ACR"><span class="nav-number">1.3.</span> <span class="nav-text">第三阶段：推送镜像到 ACR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E4%BB%93%E5%BA%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">登录仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%A8%E9%80%81%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">第一次推送失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8E%A8%E9%80%81%E6%88%90%E5%8A%9F"><span class="nav-number">1.3.3.</span> <span class="nav-text">第二次推送成功</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9AKubernetes-%E6%94%B9%E7%94%A8-ACR-%E5%9C%B0%E5%9D%80%EF%BC%8C%E4%BD%86%E4%BB%8D%E7%84%B6%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.4.</span> <span class="nav-text">第四阶段：Kubernetes 改用 ACR 地址，但仍然失败</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80"><span class="nav-number">1.4.1.</span> <span class="nav-text">修改镜像地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E9%97%AE%E9%A2%98%EF%BC%9A%E4%BB%8D%E7%84%B6%E6%8B%89%E4%B8%8D%E5%88%B0%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">新问题：仍然拉不到镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%88%87%E6%8D%A2%E5%88%B0-ACR-VPC-%E5%86%85%E7%BD%91%E5%9C%B0%E5%9D%80"><span class="nav-number">1.5.</span> <span class="nav-text">第五阶段：切换到 ACR VPC 内网地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%88%87%E5%88%B0-VPC-%E5%9C%B0%E5%9D%80%E5%90%8E%EF%BC%8C%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%EF%BC%8C%E4%BD%86%E5%87%BA%E7%8E%B0%E8%AE%A4%E8%AF%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">第六阶段：切到 VPC 地址后，网络问题解决，但出现认证问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E6%A0%B9%E5%9B%A0-%E2%80%94%E2%80%94-acr-secret-%E4%B8%8D%E5%AD%98%E5%9C%A8"><span class="nav-number">1.7.</span> <span class="nav-text">第七阶段：确认根因 —— acr-secret 不存在</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E5%9B%A0"><span class="nav-number">1.7.1.</span> <span class="nav-text">根因</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%88%9B%E5%BB%BA%E6%AD%A3%E7%A1%AE%E7%9A%84-imagePullSecret"><span class="nav-number">1.8.</span> <span class="nav-text">第八阶段：创建正确的 imagePullSecret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%9C%80%E7%BB%88%E4%BF%AE%E5%A4%8D%E6%88%90%E5%8A%9F"><span class="nav-number">1.9.</span> <span class="nav-text">第九阶段：最终修复成功</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.10.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grafana-feishu-%E9%95%9C%E5%83%8F%E6%8B%89%E5%8F%96%E6%95%85%E9%9A%9C%E6%8E%92%E9%9A%9C%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">Grafana-Feishu
+镜像拉取故障排障记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E5%B0%9D%E8%AF%95%E6%9C%AC%E5%9C%B0%E6%89%93%E5%8C%85%E9%95%9C%E5%83%8F%E5%B9%B6%E4%BC%A0%E5%88%B0%E8%8A%82%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">第一阶段：尝试本地打包镜像并传到节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.2.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.3.</span> <span class="nav-text">再次遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%94%B9%E8%B5%B0%E9%98%BF%E9%87%8C%E4%BA%91-acr-%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.</span> <span class="nav-text">第二阶段：改走阿里云 ACR
+镜像仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E8%AF%AF%E5%8C%BA"><span class="nav-number">1.2.1.</span> <span class="nav-text">初始误区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F%E5%88%B0-acr"><span class="nav-number">1.3.</span> <span class="nav-text">第三阶段：推送镜像到 ACR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E4%BB%93%E5%BA%93"><span class="nav-number">1.3.1.</span> <span class="nav-text">登录仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%A8%E9%80%81%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">第一次推送失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8E%A8%E9%80%81%E6%88%90%E5%8A%9F"><span class="nav-number">1.3.3.</span> <span class="nav-text">第二次推送成功</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5kubernetes-%E6%94%B9%E7%94%A8-acr-%E5%9C%B0%E5%9D%80%E4%BD%86%E4%BB%8D%E7%84%B6%E5%A4%B1%E8%B4%A5"><span class="nav-number">1.4.</span> <span class="nav-text">第四阶段：Kubernetes
+改用 ACR 地址，但仍然失败</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80"><span class="nav-number">1.4.1.</span> <span class="nav-text">修改镜像地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E9%97%AE%E9%A2%98%E4%BB%8D%E7%84%B6%E6%8B%89%E4%B8%8D%E5%88%B0%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">新问题：仍然拉不到镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%98%B6%E6%AE%B5%E5%88%87%E6%8D%A2%E5%88%B0-acr-vpc-%E5%86%85%E7%BD%91%E5%9C%B0%E5%9D%80"><span class="nav-number">1.5.</span> <span class="nav-text">第五阶段：切换到 ACR VPC
+内网地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E9%98%B6%E6%AE%B5%E5%88%87%E5%88%B0-vpc-%E5%9C%B0%E5%9D%80%E5%90%8E%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E4%BD%86%E5%87%BA%E7%8E%B0%E8%AE%A4%E8%AF%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">第六阶段：切到
+VPC 地址后，网络问题解决，但出现认证问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E9%98%B6%E6%AE%B5%E7%A1%AE%E8%AE%A4%E6%A0%B9%E5%9B%A0-acr-secret-%E4%B8%8D%E5%AD%98%E5%9C%A8"><span class="nav-number">1.7.</span> <span class="nav-text">第七阶段：确认根因 ——
+acr-secret 不存在</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E5%9B%A0"><span class="nav-number">1.7.1.</span> <span class="nav-text">根因</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E9%98%B6%E6%AE%B5%E5%88%9B%E5%BB%BA%E6%AD%A3%E7%A1%AE%E7%9A%84-imagepullsecret"><span class="nav-number">1.8.</span> <span class="nav-text">第八阶段：创建正确的
+imagePullSecret</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E9%98%B6%E6%AE%B5%E6%9C%80%E7%BB%88%E4%BF%AE%E5%A4%8D%E6%88%90%E5%8A%9F"><span class="nav-number">1.9.</span> <span class="nav-text">第九阶段：最终修复成功</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.10.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,7 +183,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -187,7 +194,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -285,12 +292,14 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><br>
-<br>
-<h1>Grafana-Feishu 镜像拉取故障排障记录</h1>
-<br>
-<br>
-<p>在 <code>logging</code> 命名空间部署 <code>grafana-feishu</code> 时，Pod 一直无法正常启动。</p>
+    <div class="post-body" itemprop="articleBody"><p><br></p>
+<p><br></p>
+<h1 id="grafana-feishu-镜像拉取故障排障记录">Grafana-Feishu
+镜像拉取故障排障记录</h1>
+<p><br></p>
+<p><br></p>
+<p>在 <code>logging</code> 命名空间部署 <code>grafana-feishu</code>
+时，Pod 一直无法正常启动。</p>
 <p>最初使用的镜像为：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">allanchain/grafana-feishu:latest</span></span><br></pre></td></tr></table></figure>
 <p>Pod 状态表现为：</p>
@@ -298,23 +307,27 @@
 <li><code>ErrImagePull</code></li>
 <li><code>ImagePullBackOff</code></li>
 </ul>
-<p>通过 <code>kubectl describe pod</code> 查看事件后，发现核心报错为：</p>
+<p>通过 <code>kubectl describe pod</code>
+查看事件后，发现核心报错为：</p>
 <ul>
-<li>节点从 Docker Hub 拉取 <code>allanchain/grafana-feishu:latest</code> 超时</li>
+<li>节点从 Docker Hub 拉取 <code>allanchain/grafana-feishu:latest</code>
+超时</li>
 <li>报错类似：
 <ul>
 <li><code>failed to resolve reference</code></li>
-<li><code>Head &quot;https://registry-1.docker.io/v2/...&quot;: dial tcp ...:443: i/o timeout</code></li>
+<li><code>Head "https://registry-1.docker.io/v2/...": dial tcp ...:443: i/o timeout</code></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>这说明问题不在 Deployment 语法，而在于 <strong>集群节点无法访问 Docker Hub</strong>。</p>
-<br>
-<h2 id="第一阶段：尝试本地打包镜像并传到节点">第一阶段：尝试本地打包镜像并传到节点</h2>
-<br>
+<p>这说明问题不在 Deployment 语法，而在于 <strong>集群节点无法访问
+Docker Hub</strong>。</p>
+<p><br></p>
+<h2
+id="第一阶段尝试本地打包镜像并传到节点">第一阶段：尝试本地打包镜像并传到节点</h2>
+<p><br></p>
 <h3 id="思路">思路</h3>
-<p>因为本地电脑可以成功 <code>docker pull allanchain/grafana-feishu:latest</code>，所以最开始的思路是：</p>
-<ol>
+<p>因为本地电脑可以成功
+<code>docker pull allanchain/grafana-feishu:latest</code>，所以最开始的思路是：</p>
+<ol type="1">
 <li>在本地把镜像拉下来</li>
 <li><code>docker save</code> 成 tar 包</li>
 <li>把 tar 包传到 Kubernetes 节点</li>
@@ -325,31 +338,33 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i /root/grafana-feishu.tar</span><br></pre></td></tr></table></figure>
 <p>结果提示：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command &#x27;docker&#x27; not found</span><br></pre></td></tr></table></figure>
-<p>说明当前登录的机器 <code>prod-server-ci</code> 并不是容器运行时节点，或者至少这台机器上没有 Docker CLI。</p>
+<p>说明当前登录的机器 <code>prod-server-ci</code>
+并不是容器运行时节点，或者至少这台机器上没有 Docker CLI。</p>
 <p>进一步分析后确认：</p>
 <ul>
 <li>Pod 实际被调度到的节点是：
 <ul>
 <li><code>cn-shanghai.10.71.45.249</code></li>
 <li><code>cn-shanghai.10.71.45.250</code></li>
-</ul>
-</li>
+</ul></li>
 <li>镜像拉取动作发生在这些节点上的 kubelet/container runtime</li>
-<li>因此，应该把镜像导入到 <strong>实际运行 Pod 的节点</strong>，而不是随便一台运维机</li>
+<li>因此，应该把镜像导入到 <strong>实际运行 Pod
+的节点</strong>，而不是随便一台运维机</li>
 </ul>
 <h3 id="再次遇到的问题">再次遇到的问题</h3>
 <p>尝试用 <code>scp</code> 把 tar 包传到节点，但传不过去。说明：</p>
 <ul>
 <li>节点可能不开放 SSH</li>
 <li>或者当前机器到节点网络不通</li>
-<li>或者该集群环境不适合走&quot;手工 SSH 上节点导入镜像&quot;这条路</li>
+<li>或者该集群环境不适合走"手工 SSH 上节点导入镜像"这条路</li>
 </ul>
 <p>于是放弃了手工上传节点镜像的方案。</p>
-<br>
-<h2 id="第二阶段：改走阿里云-ACR-镜像仓库">第二阶段：改走阿里云 ACR 镜像仓库</h2>
-<br>
+<p><br></p>
+<h2 id="第二阶段改走阿里云-acr-镜像仓库">第二阶段：改走阿里云 ACR
+镜像仓库</h2>
+<p><br></p>
 <p>既然集群节点无法访问 Docker Hub，那更合理的办法是：</p>
-<ol>
+<ol type="1">
 <li>在本地把镜像推送到阿里云 ACR</li>
 <li>再让集群从 ACR 拉取镜像</li>
 </ol>
@@ -359,16 +374,17 @@
 <p>结果报错：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh: connect to host ... port 22: Network is unreachable</span><br></pre></td></tr></table></figure>
 <p>后来明确了：</p>
-<p><strong>ACR 是镜像仓库，不是给 <code>ssh/scp</code> 登录的机器。</strong></p>
+<p><strong>ACR 是镜像仓库，不是给 <code>ssh/scp</code>
+登录的机器。</strong></p>
 <p>正确用法应该是：</p>
 <ul>
 <li><code>docker login</code></li>
 <li><code>docker tag</code></li>
 <li><code>docker push</code></li>
 </ul>
-<br>
-<h2 id="第三阶段：推送镜像到-ACR">第三阶段：推送镜像到 ACR</h2>
-<br>
+<p><br></p>
+<h2 id="第三阶段推送镜像到-acr">第三阶段：推送镜像到 ACR</h2>
+<p><br></p>
 <h3 id="登录仓库">登录仓库</h3>
 <p>本地执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker login --username=xxx http://xxx-registry.cn-shanghai.cr.aliyuncs.com/</span><br></pre></td></tr></table></figure>
@@ -393,14 +409,15 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">latest: digest: sha256:...</span><br></pre></td></tr></table></figure>
 <p>至此确认，正确可用的仓库地址为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx-registry.cn-shanghai.cr.aliyuncs.com/xxx/grafana-feishu:latest</span><br></pre></td></tr></table></figure>
-<br>
-<h2 id="第四阶段：Kubernetes-改用-ACR-地址，但仍然失败">第四阶段：Kubernetes 改用 ACR 地址，但仍然失败</h2>
-<br>
+<p><br></p>
+<h2 id="第四阶段kubernetes-改用-acr-地址但仍然失败">第四阶段：Kubernetes
+改用 ACR 地址，但仍然失败</h2>
+<p><br></p>
 <h3 id="修改镜像地址">修改镜像地址</h3>
 <p>将 Deployment 中的镜像改为：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">xxx-registry.cn-shanghai.cr.aliyuncs.com/xxx/grafana-feishu:latest</span></span><br></pre></td></tr></table></figure>
 <p>然后执行 rollout。</p>
-<h3 id="新问题：仍然拉不到镜像">新问题：仍然拉不到镜像</h3>
+<h3 id="新问题仍然拉不到镜像">新问题：仍然拉不到镜像</h3>
 <p>Pod 事件显示：</p>
 <ul>
 <li>不是鉴权失败</li>
@@ -419,17 +436,21 @@
 <blockquote>
 <p>集群节点能访问的是 ACR 内网 / VPC 地址，而不是公网地址</p>
 </blockquote>
-<br>
-<h2 id="第五阶段：切换到-ACR-VPC-内网地址">第五阶段：切换到 ACR VPC 内网地址</h2>
-<br>
+<p><br></p>
+<h2 id="第五阶段切换到-acr-vpc-内网地址">第五阶段：切换到 ACR VPC
+内网地址</h2>
+<p><br></p>
 <p>确认正确的内网仓库地址为：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx-registry-vpc.cn-shanghai.cr.aliyuncs.com</span><br></pre></td></tr></table></figure>
 <p>因此，Deployment 中镜像地址应改成：</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image:</span> <span class="string">xxx-registry-vpc.cn-shanghai.cr.aliyuncs.com/xxx/grafana-feishu:latest</span></span><br><span class="line"><span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br></pre></td></tr></table></figure>
-<br>
-<h2 id="第六阶段：切到-VPC-地址后，网络问题解决，但出现认证问题">第六阶段：切到 VPC 地址后，网络问题解决，但出现认证问题</h2>
-<br>
-<p>这一步 Pod 事件发生了变化。不再是 <code>i/o timeout</code>，而是：</p>
+<p><br></p>
+<h2
+id="第六阶段切到-vpc-地址后网络问题解决但出现认证问题">第六阶段：切到
+VPC 地址后，网络问题解决，但出现认证问题</h2>
+<p><br></p>
+<p>这一步 Pod 事件发生了变化。不再是
+<code>i/o timeout</code>，而是：</p>
 <ul>
 <li><code>FailedToRetrieveImagePullSecret</code></li>
 <li><code>pull access denied</code></li>
@@ -440,19 +461,19 @@
 <p>以及：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pull access denied, repository does not exist or may require authorization:</span><br><span class="line">server message: insufficient_scope: authorization failed</span><br></pre></td></tr></table></figure>
 <p>这说明：</p>
-<ol>
+<ol type="1">
 <li>网络已经通了</li>
 <li>现在真正的问题变成了：
 <ul>
 <li><strong>Pod 想使用 <code>acr-secret</code></strong></li>
 <li>但 <code>logging</code> 命名空间下根本没有这个 Secret</li>
 <li>所以 kubelet 拿不到认证信息去拉私有仓库</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<br>
-<h2 id="第七阶段：确认根因-——-acr-secret-不存在">第七阶段：确认根因 —— <code>acr-secret</code> 不存在</h2>
-<br>
+<p><br></p>
+<h2 id="第七阶段确认根因-acr-secret-不存在">第七阶段：确认根因 ——
+<code>acr-secret</code> 不存在</h2>
+<p><br></p>
 <p>执行检查：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n logging get secret acr-secret</span><br></pre></td></tr></table></figure>
 <p>返回：</p>
@@ -467,25 +488,28 @@
 <li>拉取私有仓库镜像失败</li>
 <li>ACR 返回 <code>insufficient_scope</code></li>
 </ul>
-<br>
-<h2 id="第八阶段：创建正确的-imagePullSecret">第八阶段：创建正确的 imagePullSecret</h2>
-<br>
-<p>正确做法是用 <strong>VPC 地址</strong> 创建 docker-registry Secret：</p>
+<p><br></p>
+<h2 id="第八阶段创建正确的-imagepullsecret">第八阶段：创建正确的
+imagePullSecret</h2>
+<p><br></p>
+<p>正确做法是用 <strong>VPC 地址</strong> 创建 docker-registry
+Secret：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n logging create secret docker-registry acr-secret \</span><br><span class="line">  --docker-server=xxx-registry-vpc.cn-shanghai.cr.aliyuncs.com \</span><br><span class="line">  --docker-username=xxx \</span><br><span class="line">  --docker-password=<span class="string">&#x27;ACR密码&#x27;</span> \</span><br><span class="line">  --docker-email=<span class="string">&#x27;none@example.com&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>关键点：</p>
 <ul>
-<li><code>--docker-server</code> 必须与 Deployment 中实际使用的镜像域名一致</li>
+<li><code>--docker-server</code> 必须与 Deployment
+中实际使用的镜像域名一致</li>
 <li>也就是必须写成：<code>xxx-registry-vpc.cn-shanghai.cr.aliyuncs.com</code></li>
 <li>不能再写公网地址</li>
 </ul>
-<br>
-<h2 id="第九阶段：最终修复成功">第九阶段：最终修复成功</h2>
-<br>
+<p><br></p>
+<h2 id="第九阶段最终修复成功">第九阶段：最终修复成功</h2>
+<p><br></p>
 <p>在 Secret 创建完成后，执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n logging rollout restart deployment/grafana-feishu</span><br></pre></td></tr></table></figure>
 <p>这次成功。</p>
 <p>说明此时整条链路已经打通：</p>
-<ol>
+<ol type="1">
 <li>镜像已成功推送到阿里云 ACR</li>
 <li>Deployment 已改为使用 ACR VPC 内网镜像地址</li>
 <li>集群节点可以访问该 VPC 地址</li>
@@ -493,9 +517,9 @@
 <li>私有仓库拉取认证成功</li>
 <li><code>grafana-feishu</code> Deployment 成功完成滚动重启</li>
 </ol>
-<br>
+<p><br></p>
 <h2 id="总结">总结</h2>
-<br>
+<p><br></p>
 <table>
 <thead>
 <tr>
@@ -537,8 +561,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Docker/" rel="tag"># Docker</a>
               <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/" rel="tag"># 故障排查</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
               <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
               <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/" rel="tag"># 阿里云</a>
           </div>

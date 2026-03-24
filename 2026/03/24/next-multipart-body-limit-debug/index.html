@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/next-icon.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/next-icon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/next-icon.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lter.space","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="线上用户在发布技能帖时，已经选择了 ZIP 包，页面本地也能正常读取 mcp.json 并自动回填字段，但点击提交后服务端校验阶段失败。 实际出现过三类报错： 502 backend_unreachable &#x2F; fetch failed 422 请求参数校验失败，body -&gt; file: Field required 500 Internal Server...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Next 前端代理截断大文件请求体的排查记录">
+<meta property="og:url" content="https://www.lter.space/2026/03/24/next-multipart-body-limit-debug/index.html">
+<meta property="og:site_name" content="LTSpace">
+<meta property="og:description" content="线上用户在发布技能帖时，已经选择了 ZIP 包，页面本地也能正常读取 mcp.json 并自动回填字段，但点击提交后服务端校验阶段失败。 实际出现过三类报错： 502 backend_unreachable &#x2F; fetch failed 422 请求参数校验失败，body -&gt; file: Field required 500 Internal Server...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-24T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-24T02:48:55.507Z">
+<meta property="article:author" content="LT">
+<meta property="article:tag" content="Next.js">
+<meta property="article:tag" content="故障排查">
+<meta property="article:tag" content="文件上传">
+<meta property="article:tag" content="FastAPI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.lter.space/2026/03/24/next-multipart-body-limit-debug/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.lter.space/2026/03/24/next-multipart-body-limit-debug/","path":"2026/03/24/next-multipart-body-limit-debug/","title":"Next 前端代理截断大文件请求体的排查记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Next 前端代理截断大文件请求体的排查记录 | LTSpace</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LTSpace</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">And now I see with eye serene , The very pulse of the machine.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#next-%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%90%86%E6%88%AA%E6%96%AD%E5%A4%A7%E6%96%87%E4%BB%B6%E8%AF%B7%E6%B1%82%E4%BD%93%E7%9A%84%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">Next
+前端代理截断大文件请求体的排查记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1. 问题现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E9%93%BE%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">2. 请求链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E5%88%A4%E6%96%AD%E4%B8%8D%E6%98%AF-zip-%E6%9C%AC%E8%BA%AB%E4%B8%8D%E5%90%88%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">3. 第一阶段判断：不是 ZIP
+本身不合法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E5%88%A4%E6%96%AD%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E5%87%BA%E7%9A%84-multipart-%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE"><span class="nav-number">1.4.</span> <span class="nav-text">4.
+第二阶段判断：浏览器发出的 multipart 是否正确</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%E5%88%A4%E6%96%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%85%88%E5%87%BA%E7%8E%B0-422"><span class="nav-number">1.5.</span> <span class="nav-text">5. 第三阶段判断：为什么会先出现
+422</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BE%A7%E4%B8%8D%E5%86%8D%E6%89%8B%E5%86%99-content-type"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 浏览器侧不再手写
+Content-Type</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#next-%E4%BB%A3%E7%90%86%E4%B8%8D%E5%86%8D%E9%80%8F%E4%BC%A0%E6%9C%89%E9%A3%8E%E9%99%A9%E7%9A%84%E9%95%BF%E5%BA%A6%E7%BC%96%E7%A0%81%E5%A4%B4"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 Next
+代理不再透传有风险的长度&#x2F;编码头</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%88%A4%E6%96%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8E%E6%9D%A5%E5%8F%98%E6%88%90-500"><span class="nav-number">1.6.</span> <span class="nav-text">6. 第四阶段判断：为什么后来变成
+500</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E5%9B%A0"><span class="nav-number">1.7.</span> <span class="nav-text">7. 根因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88"><span class="nav-number">1.8.</span> <span class="nav-text">8. 修复方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98-next-%E7%9A%84%E8%AF%B7%E6%B1%82%E4%BD%93%E4%B8%8A%E9%99%90"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1 提高 Next 的请求体上限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%B1%82%E5%AF%B9-multipart-%E9%87%8D%E6%96%B0%E5%BB%BA%E5%8C%85%E5%86%8D%E8%BD%AC%E5%8F%91"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2 代理层对 multipart
+重新建包再转发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%BA%A4%E4%BA%92%E4%B8%8A%E7%9A%84%E8%A1%A5%E5%85%85"><span class="nav-number">1.9.</span> <span class="nav-text">9. 前端交互上的补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E6%AC%A1%E6%8E%92%E6%9F%A5%E7%9A%84%E6%9C%89%E6%95%88%E7%BB%8F%E9%AA%8C"><span class="nav-number">1.10.</span> <span class="nav-text">10. 这次排查的有效经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E8%AE%BA"><span class="nav-number">1.11.</span> <span class="nav-text">11. 最终结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LT"
+      src="/images/20260205-175910.jpg">
+  <p class="site-author-name" itemprop="name">LT</p>
+  <div class="site-description" itemprop="description">Notes on technology, reading, films, and passing thoughts.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ltspace" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ltspace" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sdtaltt@163.com" title="E-Mail → mailto:sdtaltt@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://naiv.fun/" title="https:&#x2F;&#x2F;naiv.fun&#x2F;" rel="noopener" target="_blank">Nativus' Space</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.lter.space/2026/03/24/next-multipart-body-limit-debug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/20260205-175910.jpg">
+      <meta itemprop="name" content="LT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LTSpace">
+      <meta itemprop="description" content="Notes on technology, reading, films, and passing thoughts.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Next 前端代理截断大文件请求体的排查记录 | LTSpace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Next 前端代理截断大文件请求体的排查记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-24 12:00:00 / 修改时间：10:48:55" itemprop="dateCreated datePublished" datetime="2026-03-24T12:00:00+08:00">2026-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><br></p>
+<p><br></p>
+<h1 id="next-前端代理截断大文件请求体的排查记录">Next
+前端代理截断大文件请求体的排查记录</h1>
+<p><br></p>
+<blockquote>
+<p>日期：2026-03-24 场景：<code>/posts/new</code> 发布技能帖时，上传 MCP
+ZIP 到 <code>POST /api/v1/skills/market/package/inspect</code></p>
+</blockquote>
+<p><br></p>
+<h2 id="问题现象">1. 问题现象</h2>
+<p><br></p>
+<p>线上用户在发布技能帖时，已经选择了 ZIP 包，页面本地也能正常读取
+<code>mcp.json</code>
+并自动回填字段，但点击提交后服务端校验阶段失败。</p>
+<p>实际出现过三类报错：</p>
+<ul>
+<li><code>502 backend_unreachable / fetch failed</code></li>
+<li><code>422 请求参数校验失败，body -&gt; file: Field required</code></li>
+<li><code>500 Internal Server Error</code></li>
+</ul>
+<p>这三类报错看起来像三个问题，实际上是同一条链路上不同阶段暴露出来的现象。</p>
+<p><br></p>
+<h2 id="请求链路">2. 请求链路</h2>
+<p><br></p>
+<p>这条上传链路不是浏览器直接打后端，而是四段：</p>
+<ol type="1">
+<li>浏览器发起
+<code>POST /api/v1/skills/market/package/inspect</code></li>
+<li>请求先进入 Next App Router 的 route handler</li>
+<li>Next 再把请求代理到后端 FastAPI</li>
+<li>FastAPI 在 <code>skills.py</code> 里读取
+<code>UploadFile</code>，解析 ZIP 和 <code>mcp.json</code></li>
+</ol>
+<p>对应代码：</p>
+<ul>
+<li>前端页面发请求：<code>frontend/src/app/posts/new/page.tsx</code></li>
+<li>前端上传调用：<code>frontend/src/lib/upload.ts</code></li>
+<li>axios 实例：<code>frontend/src/lib/api.ts</code></li>
+<li>Next
+代理入口：<code>frontend/src/app/api/v1/[...path]/route.ts</code></li>
+<li>Next 代理实现：<code>frontend/src/lib/server/proxy.ts</code></li>
+<li>后端校验入口：<code>backend/app/routers/v1/skills.py</code></li>
+</ul>
+<p><br></p>
+<h2 id="第一阶段判断不是-zip-本身不合法">3. 第一阶段判断：不是 ZIP
+本身不合法</h2>
+<p><br></p>
+<p>最先看到的现象是：</p>
+<ul>
+<li>选择 ZIP 后，页面已经自动填出了技能名、显示名、版本号、入口文件</li>
+</ul>
+<p>这说明至少两件事成立：</p>
+<ul>
+<li>浏览器侧确实拿到了 ZIP 文件</li>
+<li>本地预检逻辑已经成功读到了 <code>mcp.json</code></li>
+</ul>
+<p>所以问题不在用户没选文件，也不在ZIP
+格式一定错误，而在服务端复检链路。</p>
+<p><br></p>
+<h2 id="第二阶段判断浏览器发出的-multipart-是否正确">4.
+第二阶段判断：浏览器发出的 multipart 是否正确</h2>
+<p><br></p>
+<p>接着重点检查浏览器到底发了什么。</p>
+<p>在线上页面里做了两层拦截：</p>
+<ol type="1">
+<li>拦 <code>XMLHttpRequest.send</code></li>
+<li>拦 Playwright 的 network route</li>
+</ol>
+<p>最终确认：</p>
+<ul>
+<li>请求体类型是 <code>FormData</code></li>
+<li>其中确实有一个字段名为 <code>file</code></li>
+<li>文件名是 <code>china-travel-mcp.zip</code></li>
+<li>文件大小是 <code>11259870</code></li>
+<li>浏览器请求头里的 <code>Content-Type</code> 已经是标准的
+<code>multipart/form-data; boundary=...</code></li>
+</ul>
+<p>这一步的结论很关键：</p>
+<ul>
+<li>浏览器没有漏传文件</li>
+<li>字段名也没有拼错</li>
+<li>boundary 也存在</li>
+</ul>
+<p>因此，<code>422 body -&gt; file required</code>
+不是浏览器层的问题。</p>
+<p><br></p>
+<h2 id="第三阶段判断为什么会先出现-422">5. 第三阶段判断：为什么会先出现
+422</h2>
+<p><br></p>
+<p>虽然浏览器层是对的，但服务端一度返回过：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;code&quot;</span><span class="punctuation">:</span> <span class="number">422</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;请求参数校验失败&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;errors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;field&quot;</span><span class="punctuation">:</span> <span class="string">&quot;body -&gt; file&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Field required&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个错误说明：</p>
+<ul>
+<li>请求已经到达后端</li>
+<li>但 FastAPI 没把它识别成一个合法的 <code>multipart</code>
+文件字段</li>
+</ul>
+<p>这时重点怀疑的是代理层二次转发把 multipart 搞坏了。</p>
+<p>于是做了两类修复：</p>
+<p><br></p>
+<h3 id="浏览器侧不再手写-content-type">5.1 浏览器侧不再手写
+<code>Content-Type</code></h3>
+<p><br></p>
+<p>在这些地方移除了手写的 multipart 头：</p>
+<ul>
+<li><code>frontend/src/lib/upload.ts</code></li>
+</ul>
+<p>同时在 axios 请求拦截器里加了保护：</p>
+<ul>
+<li>如果 <code>config.data instanceof FormData</code></li>
+<li>就删除默认的 <code>Content-Type</code></li>
+<li>让浏览器自己生成 boundary</li>
+</ul>
+<p>文件：</p>
+<ul>
+<li><code>frontend/src/lib/api.ts</code></li>
+</ul>
+<p><br></p>
+<h3 id="next-代理不再透传有风险的长度编码头">5.2 Next
+代理不再透传有风险的长度/编码头</h3>
+<p><br></p>
+<p>在代理层删除了：</p>
+<ul>
+<li><code>content-length</code></li>
+<li><code>content-encoding</code></li>
+</ul>
+<p>并补了失败日志，方便区分是：</p>
+<ul>
+<li>Next 连不上后端</li>
+<li>还是后端自己返回了 5xx</li>
+</ul>
+<p>文件：</p>
+<ul>
+<li><code>frontend/src/lib/server/proxy.ts</code></li>
+</ul>
+<p>这些修复解决了最初的
+<code>502 fetch failed</code>，也让请求更接近正确，但还没有解决最终问题。</p>
+<p><br></p>
+<h2 id="第四阶段判断为什么后来变成-500">6. 第四阶段判断：为什么后来变成
+500</h2>
+<p><br></p>
+<p>用户随后反馈线上变成了：</p>
+<ul>
+<li><code>500 Internal Server Error</code></li>
+</ul>
+<p>这时直接去线上机器看 pod 日志，而不是继续猜。</p>
+<p>在 <code>44</code> 机器上查看前端 pod 日志，命中了两条关键日志：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Request body exceeded 10MB for /api/v1/skills/market/package/inspect.</span><br><span class="line">Only the first 10MB will be available unless configured.</span><br></pre></td></tr></table></figure>
+<p>以及：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: Failed to parse body as FormData.</span><br></pre></td></tr></table></figure>
+<p>这两条日志直接把根因钉死了。</p>
+<p><br></p>
+<h2 id="根因">7. 根因</h2>
+<p><br></p>
+<p>根因不是后端，也不是浏览器，而是 <strong>Next 前端在启用
+<code>src/proxy.ts</code> 的情况下，对请求体有默认 10MB
+上限</strong>。</p>
+<p>而这次上传的 ZIP 实际大小是：</p>
+<ul>
+<li><code>11259870</code> 字节</li>
+<li>大约 <code>10.996 MB</code></li>
+</ul>
+<p>也就是说：</p>
+<ul>
+<li>浏览器把完整文件发到了 Next</li>
+<li>Next 在进入 route handler 前先缓冲请求体</li>
+<li>因为默认只允许 10MB，所以它把请求体截断了</li>
+<li>随后 <code>request.formData()</code> 读取的是一个被截断的 multipart
+body</li>
+<li>最终就会出现：
+<ul>
+<li>有时解析失败直接 500</li>
+<li>有时后端看到的表单不完整，表现成 422 <code>file required</code></li>
+</ul></li>
+</ul>
+<p>这也是为什么：</p>
+<ul>
+<li>普通接口都正常</li>
+<li>只有这个大文件上传接口出问题</li>
+</ul>
+<p>因为问题不是前端完全连不上后端，而是Next 在处理大 multipart body
+时先把包截断了。</p>
+<p><br></p>
+<h2 id="修复方案">8. 修复方案</h2>
+<p><br></p>
+<p>修复分两部分。</p>
+<p><br></p>
+<h3 id="提高-next-的请求体上限">8.1 提高 Next 的请求体上限</h3>
+<p><br></p>
+<p>在 <code>frontend/next.config.ts</code> 中加入：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">experimental</span>: &#123;</span><br><span class="line">  <span class="attr">proxyClientMaxBodySize</span>: <span class="string">&quot;32mb&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样技能 ZIP 在常见场景下不会再被 Next 默认的 10MB 限制截断。</p>
+<p><br></p>
+<h3 id="代理层对-multipart-重新建包再转发">8.2 代理层对 multipart
+重新建包再转发</h3>
+<p><br></p>
+<p>在 <code>frontend/src/lib/server/proxy.ts</code> 中，针对
+<code>multipart/form-data</code>：</p>
+<ol type="1">
+<li>先 <code>request.formData()</code></li>
+<li>再构造新的 <code>FormData</code></li>
+<li>把字段和文件重新 append</li>
+<li>删除原始 <code>content-type</code></li>
+<li>让 Node 重新生成新的 boundary</li>
+</ol>
+<p>这样可以避免二次转发时 header 和 body 不一致。</p>
+<p>同时补充日志字段：</p>
+<ul>
+<li><code>request_content_type</code></li>
+<li><code>request_content_length</code></li>
+<li><code>proxied_body_bytes</code></li>
+<li><code>multipart_fields</code></li>
+</ul>
+<p>这样后续如果还出问题，可以直接从日志看出代理层到底收到了哪些字段、文件名和大小。</p>
+<p><br></p>
+<h2 id="前端交互上的补充">9. 前端交互上的补充</h2>
+<p><br></p>
+<p>因为这次问题和包大小直接相关，前端页面也补了两点：</p>
+<ol type="1">
+<li>上传区提示最大支持 <code>32 MB</code></li>
+<li>选中文件时先做前置大小校验，超限立即报错，不等提交</li>
+</ol>
+<p>文件：</p>
+<ul>
+<li><code>frontend/src/app/posts/new/page.tsx</code></li>
+</ul>
+<p><br></p>
+<h2 id="这次排查的有效经验">10. 这次排查的有效经验</h2>
+<p><br></p>
+<p>这次最有价值的不是某一行修复代码，而是排查顺序。</p>
+<p>建议以后遇到类似用户明明传了文件，但后端说没收到的问题，按这个顺序查：</p>
+<ol type="1">
+<li>先看页面本地预检是否成功</li>
+<li>再确认浏览器真实发出的 <code>FormData</code> 和
+<code>Content-Type</code></li>
+<li>再看中间代理层有没有重写 header 或截断 body</li>
+<li>最后再看后端是否真的没收到字段</li>
+</ol>
+<p>不要一开始就把问题定性成：</p>
+<ul>
+<li>后端解析错了</li>
+<li>用户文件不合法</li>
+<li>线上网络不通</li>
+</ul>
+<p>对于有前端代理的 Web
+项目，<strong>中间层本身就是问题源</strong>，尤其是：</p>
+<ul>
+<li>大文件上传</li>
+<li>multipart 二次转发</li>
+<li>body limit</li>
+<li>默认代理缓冲策略</li>
+</ul>
+<p><br></p>
+<h2 id="最终结论">11. 最终结论</h2>
+<p><br></p>
+<p>本次问题的最终根因是：</p>
+<p><strong>Next 前端代理对请求体的默认 10MB 上限，导致 10.996MB 的 ZIP
+在进入 route handler 前被截断，后续 multipart 解析失败。</strong></p>
+<p>正确修复不是只改后端，也不是只改浏览器发包，而是同时做到：</p>
+<ul>
+<li>浏览器端不手写 multipart <code>Content-Type</code></li>
+<li>Next 代理层安全转发 multipart</li>
+<li>Next 配置提升请求体上限</li>
+<li>页面上明确提示最大包大小</li>
+</ul>
+<p>只有这几层一起符合，整条上传链路才稳定。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Next-js/" rel="tag"># Next.js</a>
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/" rel="tag"># 故障排查</a>
+              <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag"># 文件上传</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/18/docker-private-registry-eof-troubleshooting/" rel="prev" title="Docker 私有仓库连接 EOF 错误排查指南">
+                  <i class="fa fa-angle-left"></i> Docker 私有仓库连接 EOF 错误排查指南
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">鲁ICP备2022016408号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-circle"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">LT</span>
+  </div><div style="margin-top:1rem;text-align:center;">
+  <a href="https://clustrmaps.com/site/1byz6" title="Visit tracker" rel="noopener" target="_blank">
+    <img
+      src="//www.clustrmaps.com/map_v2.png?d=39UOFU0-uCK0cGaFhqApnRGLelojEfT2igoF5yuClko&cl=ffffff"
+      alt="ClustrMaps visitor map"
+      style="max-width:100%;height:auto;"
+    >
+  </a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
