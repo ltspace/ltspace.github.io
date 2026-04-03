@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/next-icon.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/next-icon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/next-icon.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.lter.space","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在 VS Code 的某 AI 插件 Webview 中，回复里的本地文件链接点击后没有走编辑器内的 open-file 能力，而是被当成普通网页链接打开浏览器，表现为跳转到类似下面的地址： 这会导致以下文件引用无法正常在编辑器内跳转。以下为路径示例： 问题不是单点故障，而是两层处理叠加导致： 本地文件路径格式不统一 Markdown...">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS Code 插件 Webview 本地文件链接修复记录">
+<meta property="og:url" content="https://www.lter.space/2026/04/03/vscode-webview-local-file-link-fix/index.html">
+<meta property="og:site_name" content="LTSpace">
+<meta property="og:description" content="在 VS Code 的某 AI 插件 Webview 中，回复里的本地文件链接点击后没有走编辑器内的 open-file 能力，而是被当成普通网页链接打开浏览器，表现为跳转到类似下面的地址： 这会导致以下文件引用无法正常在编辑器内跳转。以下为路径示例： 问题不是单点故障，而是两层处理叠加导致： 本地文件路径格式不统一 Markdown...">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-03T03:30:00.000Z">
+<meta property="article:modified_time" content="2026-04-03T03:21:06.333Z">
+<meta property="article:author" content="LT">
+<meta property="article:tag" content="故障排查">
+<meta property="article:tag" content="VS Code">
+<meta property="article:tag" content="Webview">
+<meta property="article:tag" content="插件开发">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.lter.space/2026/04/03/vscode-webview-local-file-link-fix/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.lter.space/2026/04/03/vscode-webview-local-file-link-fix/","path":"2026/04/03/vscode-webview-local-file-link-fix/","title":"VS Code 插件 Webview 本地文件链接修复记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VS Code 插件 Webview 本地文件链接修复记录 | LTSpace</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LTSpace</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">And now I see with eye serene , The very pulse of the machine.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vs-code-%E6%8F%92%E4%BB%B6-webview-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E4%BF%AE%E5%A4%8D%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">VS Code 插件 Webview
+本地文件链接修复记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1. 问题现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2. 根因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">3. 修复方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0-windows-%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%BC%95%E7%94%A8%E8%A7%84%E8%8C%83%E5%8C%96"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 增加 Windows
+本地文件引用规范化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-kt%E9%98%BB%E6%AD%A2%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E8%A2%AB%E6%94%B9%E5%86%99%E6%88%90%E6%B5%8F%E8%A7%88%E5%99%A8-url"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 修改
+kT()，阻止本地文件链接被改写成浏览器 URL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%8D%AE%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">4. 证据代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%BC%95%E7%94%A8%E8%A7%A3%E6%9E%90%E5%85%A5%E5%8F%A3%E5%B7%B2%E7%BB%8F%E5%A2%9E%E5%8A%A0-windows-%E8%B7%AF%E5%BE%84%E8%A7%84%E8%8C%83%E5%8C%96"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1
+文件引用解析入口已经增加 Windows 路径规范化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E8%AF%86%E5%88%AB%E9%80%BB%E8%BE%91%E6%9C%AC%E8%BA%AB%E5%AD%98%E5%9C%A8%E5%B9%B6%E6%9C%80%E7%BB%88%E8%B5%B0-open-file"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2
+文件链接识别逻辑本身存在，并最终走 open-file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E4%BF%AE%E5%A4%8D%E7%82%B9kt-%E7%8E%B0%E5%9C%A8%E5%AF%B9%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E4%BF%9D%E7%95%99%E5%8E%9F%E5%A7%8B-href"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3
+关键修复点：kT() 现在对本地文件链接保留原始
+href</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%BB%93%E6%9E%9C"><span class="nav-number">1.5.</span> <span class="nav-text">5. 验证结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%BB%9A%E6%96%B9%E5%BC%8F"><span class="nav-number">1.6.</span> <span class="nav-text">6. 回滚方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.7.</span> <span class="nav-text">7. 结论</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LT"
+      src="/images/20260205-175910.jpg">
+  <p class="site-author-name" itemprop="name">LT</p>
+  <div class="site-description" itemprop="description">Notes on technology, reading, films, and passing thoughts.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ltspace" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ltspace" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sdtaltt@163.com" title="E-Mail → mailto:sdtaltt@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://naiv.fun/" title="https:&#x2F;&#x2F;naiv.fun&#x2F;" rel="noopener" target="_blank">Nativus' Space</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.lter.space/2026/04/03/vscode-webview-local-file-link-fix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/20260205-175910.jpg">
+      <meta itemprop="name" content="LT">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LTSpace">
+      <meta itemprop="description" content="Notes on technology, reading, films, and passing thoughts.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="VS Code 插件 Webview 本地文件链接修复记录 | LTSpace">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VS Code 插件 Webview 本地文件链接修复记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-04-03 11:30:00 / 修改时间：11:21:06" itemprop="dateCreated datePublished" datetime="2026-04-03T11:30:00+08:00">2026-04-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><br></p>
+<p><br></p>
+<h1 id="vs-code-插件-webview-本地文件链接修复记录">VS Code 插件 Webview
+本地文件链接修复记录</h1>
+<p><br></p>
+<h2 id="问题现象">1. 问题现象</h2>
+<p>在 VS Code 的某 AI 插件 Webview
+中，回复里的本地文件链接点击后没有走编辑器内的 <code>open-file</code>
+能力，而是被当成普通网页链接打开浏览器，表现为跳转到类似下面的地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/...</span><br></pre></td></tr></table></figure>
+<p>这会导致以下文件引用无法正常在编辑器内跳转。以下为路径示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">c:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L17</span><br><span class="line">C:\Users\&lt;USER&gt;\&lt;WORKSPACE&gt;\internal\module\example_file.go:73</span><br><span class="line">/C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/http/example_test.go:1</span><br><span class="line">file:///C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L71</span><br><span class="line">c%3A/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L25</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="根因分析">2. 根因分析</h2>
+<p>问题不是单点故障，而是两层处理叠加导致：</p>
+<ol type="1">
+<li>本地文件路径格式不统一</li>
+<li>Markdown 渲染阶段过早改写了本地文件 <code>href</code></li>
+</ol>
+<p>具体来说：</p>
+<ol type="1">
+<li><p>本地文件路径格式不统一<br />
+Webview 里的文件引用可能以
+<code>c:/</code>、<code>C:\</code>、<code>/C:/</code>、<code>file:///C:/</code>、<code>c%3A/...</code>
+等不同形式出现，原始解析逻辑没有先做 Windows 路径规范化。</p></li>
+<li><p>Markdown 渲染阶段过早改写了本地文件 <code>href</code><br />
+在文件链接被
+<code>renderPromptLink -&gt; FileLink -&gt; open-file</code>
+接管之前，<code>urlTransform</code>
+已经先把它按普通链接处理并改写，因此点击时直接走浏览器。</p></li>
+</ol>
+<p>结论：仅修复文件引用解析函数还不够，必须同时修复
+<code>urlTransform</code> 对本地文件链接的判定。</p>
+<p><br></p>
+<h2 id="修复方案">3. 修复方案</h2>
+<p>本次修复直接修改已安装扩展的 Webview bundle。以下安装路径已脱敏：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\&lt;USER&gt;\.vscode\extensions\&lt;publisher&gt;.&lt;extension&gt;-&lt;version&gt;\webview\assets\markdown-*.js</span><br></pre></td></tr></table></figure>
+<p>并保留原始备份：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\&lt;USER&gt;\.vscode\extensions\&lt;publisher&gt;.&lt;extension&gt;-&lt;version&gt;\webview\assets\markdown-*.js.bak</span><br></pre></td></tr></table></figure>
+<p>修复分为两部分。</p>
+<h3 id="增加-windows-本地文件引用规范化">3.1 增加 Windows
+本地文件引用规范化</h3>
+<p>新增 <code>normalizeWindowsFileReference()</code>，在
+<code>parseFileReference</code> 的入口统一处理：</p>
+<ul>
+<li><code>decodeURIComponent</code></li>
+<li><code>file:///C:/...</code> 去协议头</li>
+<li><code>/C:/...</code> 去前导斜杠</li>
+<li><code>C:\...</code> 转成 <code>C:/...</code></li>
+</ul>
+<p>这样文件引用在进入后续判断前会被统一成可识别的本地路径。</p>
+<h3 id="修改-kt阻止本地文件链接被改写成浏览器-url">3.2 修改
+<code>kT()</code>，阻止本地文件链接被改写成浏览器 URL</h3>
+<p>原逻辑只对 <code>app</code>、<code>plugin</code>、<code>agent</code>
+之类的特殊链接保留原始 <code>href</code>。<br />
+修复后把 <code>_b(e)</code> 和 <code>vb(e)</code>
+识别出的本地文件链接也纳入保留范围，避免它们被 <code>Xc(e)</code> 转成
+<code>vscode-resource</code> 风格 URL。</p>
+<p><br></p>
+<h2 id="证据代码">4. 证据代码</h2>
+<p>以下证据来自修复后的 bundle 文件。</p>
+<h3 id="文件引用解析入口已经增加-windows-路径规范化">4.1
+文件引用解析入口已经增加 Windows 路径规范化</h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">normalizeWindowsFileReference</span>(<span class="params">e</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> t=e.<span class="title function_">replace</span>(<span class="regexp">/`/g</span>,<span class="string">&#x27;&#x27;</span>).<span class="title function_">trim</span>();</span><br><span class="line">  <span class="keyword">try</span>&#123;t=<span class="built_in">decodeURIComponent</span>(t)&#125;<span class="keyword">catch</span>&#123;&#125;</span><br><span class="line">  <span class="keyword">let</span> n=t.<span class="title function_">toLowerCase</span>();</span><br><span class="line">  <span class="keyword">return</span> n.<span class="title function_">startsWith</span>(<span class="string">&#x27;file:///&#x27;</span>)&amp;&amp;(t=t.<span class="title function_">slice</span>(<span class="number">8</span>)),</span><br><span class="line">    <span class="regexp">/^\/[A-Za-z]:[\\/]/</span>.<span class="title function_">test</span>(t)&amp;&amp;(t=t.<span class="title function_">replace</span>(<span class="regexp">/^\/+/g</span>,<span class="string">&#x27;&#x27;</span>)),</span><br><span class="line">    <span class="regexp">/^[A-Za-z]:[\\/]/</span>.<span class="title function_">test</span>(t)&amp;&amp;(t=t.<span class="title function_">replace</span>(<span class="regexp">/\\/g</span>,<span class="string">&#x27;/&#x27;</span>)),</span><br><span class="line">    t</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">pb</span>(<span class="params">e</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> t=<span class="title function_">normalizeWindowsFileReference</span>(e),n=t.<span class="title function_">match</span>(...)</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：<code>pb()</code>
+即文件引用解析入口，修复后不再直接对原始字符串做正则匹配，而是先做规范化。</p>
+<h3 id="文件链接识别逻辑本身存在并最终走-open-file">4.2
+文件链接识别逻辑本身存在，并最终走 <code>open-file</code></h3>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Qw</span>(<span class="params">&#123;className:e,cwd:t,elementKey:n,href:r,label:i&#125;</span>)&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">if</span>(<span class="title function_">_b</span>(r)||<span class="title function_">vb</span>(r))&#123;</span><br><span class="line">    <span class="keyword">let</span> i=<span class="title function_">pb</span>(r),o=<span class="title function_">mb</span>(i);</span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>,V.<span class="property">jsx</span>)(yb,&#123;...&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">wb</span>(<span class="params">e</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> &#123;...,<span class="attr">path</span>:o,<span class="attr">line</span>:s,<span class="attr">column</span>:l,<span class="attr">cwd</span>:u&#125;=e,d=<span class="title class_">Ke</span>(<span class="string">`open-file`</span>)</span><br><span class="line">  ...</span><br><span class="line">  d.<span class="title function_">mutate</span>(&#123;<span class="attr">path</span>:o,<span class="attr">line</span>:s,<span class="attr">column</span>:e,<span class="attr">cwd</span>:u&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：这证明插件本身已经有“识别文件链接并调用
+<code>open-file</code>”的能力，问题不在跳转能力缺失，而在前序处理把链接提前改坏了。</p>
+<h3 id="关键修复点kt-现在对本地文件链接保留原始-href">4.3
+关键修复点：<code>kT()</code> 现在对本地文件链接保留原始
+<code>href</code></h3>
+<p>修复后的代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">kT</span>(<span class="params">e,t,n</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> t===<span class="string">`href`</span>&amp;&amp;n.<span class="property">tagName</span>===<span class="string">`a`</span>&amp;&amp;(<span class="title function_">q_</span>(e)||<span class="title function_">X_</span>(e)||<span class="title function_">J_</span>(e)||<span class="title function_">Y_</span>(e)||<span class="title function_">_b</span>(e)||<span class="title function_">vb</span>(e))</span><br><span class="line">    || t===<span class="string">`src`</span>&amp;&amp;n.<span class="property">tagName</span>===<span class="string">`img`</span>&amp;&amp;(uT.<span class="title function_">test</span>(e)||<span class="title function_">et</span>(e))</span><br><span class="line">    ? e</span><br><span class="line">    : <span class="title class_">Xc</span>(e)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关键变化是新增：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">||<span class="title function_">_b</span>(e)||<span class="title function_">vb</span>(e)</span><br></pre></td></tr></table></figure>
+<p>说明：这一步让本地文件链接不再被 <code>Xc(e)</code>
+改写，从而能够继续流入 <code>Qw()</code>，最终由 <code>open-file</code>
+打开。</p>
+<p><br></p>
+<h2 id="验证结果">5. 验证结果</h2>
+<p>已验证以下输入都可以被解析为统一的本地文件路径，并保留行号。以下样例均已脱敏：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">c:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L17</span><br><span class="line">=&gt; &#123;&quot;path&quot;:&quot;c:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go&quot;,&quot;line&quot;:17&#125;</span><br><span class="line"></span><br><span class="line">c%3A/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L17</span><br><span class="line">=&gt; &#123;&quot;path&quot;:&quot;c:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go&quot;,&quot;line&quot;:17&#125;</span><br><span class="line"></span><br><span class="line">C:\Users\&lt;USER&gt;\&lt;WORKSPACE&gt;\internal\module\example_file.go:25</span><br><span class="line">=&gt; &#123;&quot;path&quot;:&quot;C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go&quot;,&quot;line&quot;:25&#125;</span><br><span class="line"></span><br><span class="line">/C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go:31</span><br><span class="line">=&gt; &#123;&quot;path&quot;:&quot;C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go&quot;,&quot;line&quot;:31&#125;</span><br><span class="line"></span><br><span class="line">file:///C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go#L71</span><br><span class="line">=&gt; &#123;&quot;path&quot;:&quot;C:/Users/&lt;USER&gt;/&lt;WORKSPACE&gt;/internal/module/example_file.go&quot;,&quot;line&quot;:71&#125;</span><br></pre></td></tr></table></figure>
+<p>实际操作上，在执行 <code>Developer: Reload Window</code> 后，点击
+Webview 中的本地文件链接，已经能够回到 VS Code
+内部打开文件，而不再跳转浏览器。</p>
+<p><br></p>
+<h2 id="回滚方式">6. 回滚方式</h2>
+<p>如果后续扩展升级或补丁需要撤回，直接用备份文件覆盖：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">源文件：</span><br><span class="line">C:\Users\&lt;USER&gt;\.vscode\extensions\&lt;publisher&gt;.&lt;extension&gt;-&lt;version&gt;\webview\assets\markdown-*.js.bak</span><br><span class="line"></span><br><span class="line">目标文件：</span><br><span class="line">C:\Users\&lt;USER&gt;\.vscode\extensions\&lt;publisher&gt;.&lt;extension&gt;-&lt;version&gt;\webview\assets\markdown-*.js</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="结论">7. 结论</h2>
+<p>这次问题的本质是：</p>
+<ul>
+<li>Windows 本地文件路径格式不统一</li>
+<li>Webview 的 URL 转换流程对本地文件链接处理顺序不正确</li>
+</ul>
+<p>最终有效修复不是单纯“增强文件路径解析”，而是同时修正：</p>
+<ul>
+<li>文件路径规范化入口</li>
+<li>Markdown <code>href</code> 的 URL 保留策略</li>
+</ul>
+<p>只有两者一起改，文件链接才能稳定落到
+<code>open-file</code>，而不是被浏览器接管。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/" rel="tag"># 故障排查</a>
+              <a href="/tags/VS-Code/" rel="tag"># VS Code</a>
+              <a href="/tags/Webview/" rel="tag"># Webview</a>
+              <a href="/tags/%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" rel="tag"># 插件开发</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/24/next-multipart-body-limit-debug/" rel="prev" title="Next 前端代理截断大文件请求体的排查记录">
+                  <i class="fa fa-angle-left"></i> Next 前端代理截断大文件请求体的排查记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">鲁ICP备2022016408号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-circle"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">LT</span>
+  </div><div style="margin-top:1rem;text-align:center;">
+  <a href="https://clustrmaps.com/site/1byz6" title="Visit tracker" rel="noopener" target="_blank">
+    <img
+      src="//www.clustrmaps.com/map_v2.png?d=39UOFU0-uCK0cGaFhqApnRGLelojEfT2igoF5yuClko&cl=ffffff"
+      alt="ClustrMaps visitor map"
+      style="max-width:100%;height:auto;"
+    >
+  </a>
+</div>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
